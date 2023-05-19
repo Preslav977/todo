@@ -1,6 +1,7 @@
-/* eslint-disable no-underscore-dangle */
+// This class is responsible for the todo/task and
+// nothing more than that.
 
-class CreateTodo {
+class CreateTodoItem {
   constructor(title, description, dueDate, priority, id) {
     this.title = title;
     this.description = description;
@@ -68,4 +69,4 @@ class CreateTodo {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { CreateTodo };
+export { CreateTodoItem };

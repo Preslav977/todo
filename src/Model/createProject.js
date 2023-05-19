@@ -1,10 +1,13 @@
-/* eslint-disable no-underscore-dangle */
-const projectArray = [];
+/* eslint-disable class-methods-use-this */
+const toDoItemArray = [[]];
 
-class CreateProjects {
-  constructor(title, id) {
+class CreateProjectToDo {
+  // title to know what is project name
+  // id is for deleting the project
+  // using crypto to generate random UUID
+  // instead of generating manually from 0 to ...
+  constructor(title) {
     this.title = title;
-    this.id = crypto.randomUUID();
   }
 
   get title() {
@@ -18,14 +21,30 @@ class CreateProjects {
     this._title = value;
   }
 
-  get id() {
-    return this._id;
+  // method create project class
+  createProject() {}
+
+  // method read project class
+  readToDoItem(index) {
+    // show in the console, project with name,
+    // "Inbox", what his toDoItem arrays has ?
+    console.log(toDoItemArray[index]);
   }
 
-  set id(value) {
-    this._id = value;
+  // method update project class
+  updateToDoItem(todoItem) {
+    // update the project with name "Inbox",
+    // push new toDoItem ?
+    toDoItemArray.push(todoItem);
+  }
+
+  // method delete project class
+  deleteToDoItem(index) {
+    // delete from the array with name "Inbox",
+    // the toDoItem with following index ?
+    toDoItemArray.splice(index, 1);
   }
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { CreateProjects, projectArray };
+export default CreateProjectToDo;
+export { toDoItemArray };
