@@ -1,41 +1,38 @@
-import ProjectsFolder, { projectsFolderArray } from "./Model/ProjectsFolder";
-import CreateProjectToDo, { toDoItemArray } from "./Model/createProject";
+import { CreateTodo } from "./Model/createTodo";
+import CreateProject from "./Model/createProject";
+import ProjectsFolder from "./Model/ProjectsFolder";
 
-import { CreateTodoItem } from "./Model/createTodoItem";
+// this folder wraps the projects
+const defaultFolder = new ProjectsFolder("Default");
+defaultFolder.addProjects(defaultFolder);
+console.log(defaultFolder.projects);
 
-const createNewFolder = new ProjectsFolder("Default");
-// console.log(createProjectsFolder);
+// first users has to create mew project
+const defaultProject = new CreateProject("Default");
 
-const defaultProject = new CreateProjectToDo("Default Project");
-// console.log(defaultProject);
-createNewFolder.updateProjects(defaultProject);
-
-const todayToDo = new CreateTodoItem(
-  "working on todo",
-  "working on some implementation",
-  "19/5/2024",
+// then inside the project they can create todos/tasks
+const todo1 = new CreateTodo(
+  "fixing bugs",
+  "on my todo class",
+  "20/5/2024",
   "high"
 );
 
-defaultProject.updateToDoItem(todayToDo);
-
-const tomorrowToDo = new CreateTodoItem(
-  "working on some additional things",
-  "this is for todo also",
-  "20/5/2024",
+const todo2 = new CreateTodo(
+  "fixing other stuff",
+  "on my other class",
+  "22/5/2024",
   "medium"
 );
 
-defaultProject.updateToDoItem(tomorrowToDo);
-
-const afterTomorrowToDo = new CreateTodoItem(
-  "driving the car",
-  "to get to the city",
-  "21/5/2024",
+const todo3 = new CreateTodo(
+  "taking a break",
+  "after fixing the errors",
+  "20/5/2024",
   "low"
 );
 
-defaultProject.updateToDoItem(afterTomorrowToDo);
-createNewFolder.updateProjects(toDoItemArray);
-
-console.log(projectsFolderArray);
+defaultProject.addToDo(todo1);
+defaultProject.addToDo(todo2);
+defaultProject.addToDo(todo3);
+console.log(defaultProject.todos);

@@ -1,11 +1,5 @@
-/* eslint-disable class-methods-use-this */
-
-const projectsFolderArray = [[]];
-
 class ProjectsFolder {
-  // using title to know the projectsFolder
-  // and using crypto here for managing the
-  // ids of the projectsFolder
+  projects = [];
 
   constructor(title, id) {
     this.title = title;
@@ -31,29 +25,13 @@ class ProjectsFolder {
     this._id = value;
   }
 
-  // method for creating the projectsFolder class
-  createProjects() {}
-
-  // method for reading the projectsFolder class
-  readProjects(index) {
-    // show in the console, projectFolder
-    // what project has in the array ?
-    console.log(projectsFolderArray[index]);
+  addProjects(projectName) {
+    this.projects.push(projectName);
   }
 
-  // method for updating the projectsFolder class
-  updateProjects(projectName) {
-    // add in the array new project ?
-    projectsFolderArray.push(projectName);
-  }
-
-  // method for deleting the projectsFolder class
   deleteProjects(index) {
-    // delete from project name, the following
-    // project ?
-    projectsFolderArray.splice(index, 1);
+    this.projects.splice(index, 1);
   }
 }
 
 export default ProjectsFolder;
-export { projectsFolderArray };
