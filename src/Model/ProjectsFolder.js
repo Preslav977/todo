@@ -1,3 +1,5 @@
+import CreateProject from "./createProject";
+
 class ProjectsFolder {
   projects = [];
 
@@ -26,7 +28,27 @@ class ProjectsFolder {
   }
 
   addProjects(projectName) {
-    this.projects.push(projectName);
+    const newProject = new CreateProject(projectName);
+    this.projects.push(newProject);
+  }
+
+  findProject(projectName) {
+    const findProject = this.projects.find(
+      (project) => project.title === projectName
+    );
+    return findProject;
+  }
+
+  editProject(oldProjectTitle, newProjectTitle) {
+    const findProject = this.projects.find(
+      (project) => project.title === oldProjectTitle
+    );
+
+    if (findProject.title !== "") {
+      findProject.title = newProjectTitle;
+    }
+
+    return findProject;
   }
 
   deleteProjects(index) {

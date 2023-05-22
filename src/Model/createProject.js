@@ -1,3 +1,5 @@
+import { CreateTodo } from "./createTodo";
+
 class CreateProject {
   todos = [];
 
@@ -17,8 +19,34 @@ class CreateProject {
     this._title = value;
   }
 
-  addToDo(todo) {
-    this.todos.push(todo);
+  get id() {
+    return this._id;
+  }
+
+  set id(value) {
+    this._id = value;
+  }
+
+  addToDo(title, description, dueDate, priority, id) {
+    const newToDo = new CreateTodo(title, description, dueDate, priority, id);
+    this.todos.push(newToDo);
+  }
+
+  findToDo(todoTitle) {
+    const findTodo = this.todos.find((todo) => todo.title === todoTitle);
+    return findTodo;
+  }
+
+  editToDo(oldToDoTitle, newToDoTitle) {
+    const findTodo = this.todos.find(
+      (project) => project.title === oldToDoTitle
+    );
+
+    if (findTodo.title !== "") {
+      findTodo.title = newToDoTitle;
+    }
+
+    return findTodo;
   }
 
   deleteToDo(index) {
