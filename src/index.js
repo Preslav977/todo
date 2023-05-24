@@ -1,14 +1,15 @@
+import "./style.css";
 import CreateProject from "./Model/createProject";
 import ProjectsFolder from "./Model/ProjectsFolder";
+import { addNewTodo, addTodo, createTodoDOM } from "./View/createTodosDOM";
+import {
+  addNewProject,
+  addProject,
+  createProjectsDOM,
+} from "./View/createProjectsDOM";
 
 const folder = new ProjectsFolder("Inbox");
-folder.addProjects(
-  "Default",
-  "taking a bath",
-  "for science",
-  new Date(),
-  "low"
-);
+folder.addProjects("Default");
 
 const defaultProject = new CreateProject("Default");
 
@@ -28,3 +29,11 @@ defaultProject.addToDo(
 
 console.log(folder.projects);
 console.log(defaultProject.todos);
+
+createProjectsDOM("Testing");
+addNewProject();
+addProject();
+
+createTodoDOM();
+addNewTodo();
+addTodo();

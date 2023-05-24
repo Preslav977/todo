@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 2px solid black;
+  height: 50px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-header-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.sub-header {
+  margin-top: 10px;
+}
+
+body {
+  background-color: lightskyblue;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+.main-container {
+  /* outline: 2px solid black; */
+  display: grid;
+  grid-template-columns: 500px 2fr;
+  grid-template-rows: 1fr;
+  min-height: 100%;
+  margin-top: 20px;
+}
+
+.projects {
+  outline: 2px solid black;
+  margin: 20px 20px -12px 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.svg-icons {
+  width: 20px;
+  cursor: pointer;
+}
+
+.todos {
+  outline: 2px solid black;
+  margin: 20px 20px -12px 0px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-radius: 10px;
+}
+
+.todo-content {
+  padding-left: 10px;
+}
+
+.todo-content:nth-child(3) {
+  padding-left: 25em;
+}
+
+.todo-content:nth-child(4) {
+  padding-left: 25.5em;
+}
+
+.todo-content-svg-icons {
+  margin-left: 55px;
+}
+
+.input-text-project {
+  width: 100%;
+}
+
+.submit-btn-project {
+  width: 200px;
+  margin-left: 5px;
+}
+
+.input-text-todo {
+  width: 600px;
+  margin-left: 5px;
+}
+
+.todo-content-priority {
+  /* width: 50px; */
+  padding: 2px 8px;
+  margin-left: 20px;
+}
+
+.todo-content-date {
+  padding-left: 25.7em;
+}
+
+.submit-btn-todo {
+  width: 100px;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.todo-content-priority-menu {
+  padding: 2px 8px;
+  margin-left: 28.5em;
+}
+
+.footer-container {
+  outline: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
