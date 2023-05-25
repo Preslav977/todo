@@ -2,7 +2,7 @@
 // nothing more than that.
 
 class CreateTodo {
-  constructor(title, description, dueDate, priority, id) {
+  constructor(title, description, dueDate, priority, complete, id) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -10,6 +10,7 @@ class CreateTodo {
     // using crypto random UUID for creating the objects,
     // this is done early in objects creation for
     // easy deletion later from the array and DOM
+    this.complete = complete;
     this.id = crypto.randomUUID();
   }
 
@@ -57,6 +58,14 @@ class CreateTodo {
 
   set priority(value) {
     this._priority = value;
+  }
+
+  get complete() {
+    return this._complete;
+  }
+
+  set complete(value) {
+    this._complete = value;
   }
 
   get id() {

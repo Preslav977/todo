@@ -1,39 +1,24 @@
 import "./style.css";
+
+import ProjectsFolder from "./Model/projectsFolder";
 import CreateProject from "./Model/createProject";
-import ProjectsFolder from "./Model/ProjectsFolder";
-import { addNewTodo, addTodo, createTodoDOM } from "./View/createTodosDOM";
-import {
-  addNewProject,
-  addProject,
-  createProjectsDOM,
-} from "./View/createProjectsDOM";
+import { viewProjects, addProjectBtn, addProject } from "./View/renderProjects";
+import { addTodosBtn, viewTodos } from "./View/renderTodos";
 
-const folder = new ProjectsFolder("Inbox");
-folder.addProjects("Default");
+const projectsContainer = document.querySelector(".projects");
+// console.log(projectsContainer);
 
-const defaultProject = new CreateProject("Default");
+const folder = new ProjectsFolder("Folder");
+addProjectBtn.addEventListener("click", () => {
+  folder.addProjects("Default");
+  folder.addProjects("New Project");
+  viewProjects.renderProjects(folder.projects);
+});
 
-defaultProject.addToDo("taking a bath", "for science", new Date(), "low");
-defaultProject.addToDo(
-  "watching ghost videos",
-  "this is so scary",
-  new Date(),
-  "medium"
-);
-defaultProject.addToDo(
-  "doing some TOP",
-  "to continue to learn",
-  new Date(),
-  "high"
-);
+// console.log(folder.projects);
 
-console.log(folder.projects);
-console.log(defaultProject.todos);
-
-createProjectsDOM("Testing");
-addNewProject();
-addProject();
-
-createTodoDOM();
-addNewTodo();
-addTodo();
+const project = new CreateProject("Default");
+addTodosBtn.addEventListener("click", () => {
+  project.addToDo("testing", "my todo functionality", new Date(), "high", true);
+  viewTodos.renderTodos(project.todos);
+});
