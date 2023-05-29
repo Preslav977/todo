@@ -69,7 +69,7 @@ class CreateTodo {
   }
 
   get id() {
-    return this.id;
+    return this._id;
   }
 
   set id(value) {

@@ -27,8 +27,15 @@ class CreateProject {
     this._id = value;
   }
 
-  addToDo(title, description, dueDate, priority, id) {
-    const newToDo = new CreateTodo(title, description, dueDate, priority, id);
+  addToDo(title, description, dueDate, priority, complete, id) {
+    const newToDo = new CreateTodo(
+      title,
+      description,
+      dueDate,
+      priority,
+      complete,
+      id
+    );
     this.todos.push(newToDo);
   }
 
