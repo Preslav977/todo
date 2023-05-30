@@ -1,4 +1,4 @@
-import trashcanSvg from "../svg-icons/trash-can-outline.svg";
+import trashcanSvg from "../svg-icons/trashcan-white.svg";
 
 const projectsContainer = document.getElementById("project-container");
 const addProjectBtn = document.getElementById("add-projects-btn");

@@ -5,37 +5,39 @@ import CreateProject from "./Model/createProject";
 import { viewProjects, addProjectBtn } from "./View/renderProjects";
 import { viewTodos, addTodosBtn } from "./View/renderTodos";
 
-const folder = new ProjectsFolder("Folder");
-console.log(folder);
-console.log(folder.projects);
+const folder = new ProjectsFolder("Default");
+folder.addProjects("Default", "0");
+console.log(folder.findProjectById("0"));
+folder.addProjects("New project", "1");
+// console.log(folder.projects);
 addProjectBtn.addEventListener("click", () => {
-  folder.addProjects("Default");
-  folder.addProjects("New project");
   viewProjects.renderProjects(folder.projects[0]);
   // viewProjects.renderProjects(folder.projects[1]);
-  console.log(folder.projects);
-  console.log(folder.findProject("Default"));
-  const projectContent = document.querySelectorAll(".projects-content");
-  projectContent.forEach((project) => {
-    project.addEventListener("click", () => {
-      const newProject = new CreateProject("Default");
-      newProject.addToDo(
+  const projectsContent = document.querySelectorAll(".projects-content");
+  projectsContent.forEach((project) => {
+    project.addEventListener("click", (e) => {
+      const projectsIds = e.target;
+      const saveProjectsIds = projectsIds.getAttribute("projects-id");
+      console.log(saveProjectsIds);
+      const inboxProject = new CreateProject("Inbox");
+      inboxProject.addToDo(
         "testing",
-        "todos cuz why not",
+        "shake it like salt shake",
         new Date(),
         "high",
         true
       );
-      const anotherProject = new CreateProject("Testing");
-      anotherProject.addToDo(
-        "another test",
-        "to see if this works",
+      const todayProject = new CreateProject("Today");
+      todayProject.addToDo(
+        "new todo",
+        "cuz why not",
         new Date(),
         "medium",
         false
       );
-      viewTodos.renderTodos(newProject.todos[0]);
-      viewTodos.renderTodos(anotherProject.todos[0]);
+      viewTodos.renderTodos(inboxProject.todos[0], saveProjectsIds);
+      viewTodos.renderTodos(todayProject.todos[0], saveProjectsIds);
+      // console.log(inboxProject.todos);
     });
   });
 });

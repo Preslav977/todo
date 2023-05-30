@@ -1,11 +1,18 @@
 import CreateProject from "./createProject";
 
+const randomUUID = function b(a) {
+  return a
+    ? // eslint-disable-next-line no-bitwise
+      (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+    : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b);
+};
+
 class ProjectsFolder {
   projects = [];
 
-  constructor(title, id) {
+  constructor(title, id = randomUUID()) {
     this.title = title;
-    this.id = crypto.randomUUID();
+    this.id = id;
   }
 
   get title() {
@@ -27,16 +34,21 @@ class ProjectsFolder {
     this._id = value;
   }
 
-  addProjects(projectName) {
-    const newProject = new CreateProject(projectName);
+  addProjects(projectName, id = randomUUID()) {
+    const newProject = new CreateProject(projectName, id);
     this.projects.push(newProject);
   }
 
-  findProject(projectName) {
-    const findProject = this.projects.find(
-      (project) => project.title === projectName
-    );
-    return findProject;
+  findProjectById(projectId) {
+    return this.projects.find((project) => project.id === projectId);
+  }
+
+  findProjects(findFunctionProjects) {
+    return this.projects.find(findFunctionProjects);
+  }
+
+  findAllProjects(filterFunctionProjects = () => true) {
+    return this.projects.filter(filterFunctionProjects);
   }
 
   editProject(oldProjectTitle, newProjectTitle) {

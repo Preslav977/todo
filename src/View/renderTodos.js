@@ -1,12 +1,18 @@
-import calendarSvg from "../svg-icons/calendar-month-outline.svg";
-import trashcanSvg from "../svg-icons/trash-can-outline.svg";
+import calendarSvg from "../svg-icons/calendar-white.svg";
+import trashcanSvg from "../svg-icons/trashcan-white.svg";
+import ProjectsFolder from "../Model/projectsFolder";
+
+const projects = ["0"];
 
 const todoContainer = document.getElementById("todo-container");
 const addTodosBtn = document.getElementById("add-todos-btn");
 
 // pass here todo, title, description, dueDate, priority, complete
 const viewTodos = {
-  renderTodos(todos) {
+  renderTodos(todos, id) {
+    const findProjects = projects.find((project) => project.id === "0");
+    console.log(projects[0]);
+    // console.log(findProjects);
     // create the container that will append the other DOM element
     const todoDiv = document.createElement("div");
     todoDiv.setAttribute("todos-id", todos.id);
