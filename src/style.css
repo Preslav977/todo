@@ -45,7 +45,7 @@ body {
   margin-top: 20px;
 }
 
-.projects-add-btn,
+.project-add-btn,
 .projects-content {
   outline: 2px solid black;
   margin: 20px 20px -12px 20px;
@@ -63,10 +63,19 @@ body {
   cursor: pointer;
 }
 
+.input-text-project {
+  width: 100%;
+}
+
+.submit-button-project {
+  width: 200px;
+  margin-left: 5px;
+}
+
 .todos-add-btn,
 .todos-content {
   outline: 2px solid black;
-  margin: 20px 20px -12px 0px;
+  margin: 20px 20px -12px 10px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -87,16 +96,7 @@ body {
 }
 
 .todo-content-svg-icons {
-  margin-left: 55px;
-}
-
-.input-text-project {
-  width: 100%;
-}
-
-.submit-btn-project {
-  width: 200px;
-  margin-left: 5px;
+  margin-left: 25px;
 }
 
 .input-text-todo {
@@ -107,17 +107,17 @@ body {
 .todo-content-priority {
   /* width: 50px; */
   padding: 2px 8px;
-  margin-left: 20px;
+  margin-left: 25px;
 }
 
 .todo-content-date {
-  padding-left: 25.7em;
+  padding-left: 25em;
 }
 
 .submit-btn-todo {
   width: 100px;
   margin-right: 10px;
-  margin-left: 5px;
+  margin-left: 12px;
 }
 
 .todo-content-priority-menu {

@@ -1,9 +1,7 @@
 import trashcanSvg from "../svg-icons/trashcan-white.svg";
 
 const projectsContainer = document.getElementById("project-container");
-const addProjectBtn = document.getElementById("add-projects-btn");
 
-// parameter to pass project object title here
 const viewProjects = {
   renderProjects(projects) {
     const projectDiv = document.createElement("div");
@@ -18,34 +16,26 @@ const viewProjects = {
   },
 };
 
-function renderAddNewProject() {
+function renderProjectsButton() {
   const projectsDiv = document.createElement("div");
-  projectsDiv.classList.add("projects");
-  projectsDiv.textContent = "+ new project";
-  projectsContainer.appendChild(projectsDiv);
-}
-
-// hide the first button and show this
-// function which users can enter the project name
-// and submit it
-function renderProjectSubmitBtn() {
-  const newProject = document.createElement("div");
+  projectsDiv.classList.add("project-add-btn");
+  const projectParagraph = document.createElement("p");
+  projectParagraph.textContent = "+ new project";
+  projectParagraph.classList.add("project-paragraph");
+  projectParagraph.style.display = "flex";
   const inputText = document.createElement("input");
-  const submitBtn = document.createElement("button");
-  newProject.classList.add("projects");
   inputText.setAttribute("type", "submit");
   inputText.setAttribute("type", "text");
   inputText.classList.add("input-text-project");
+  inputText.style.display = "none";
+  const submitBtn = document.createElement("button");
   submitBtn.textContent = "Submit";
-  submitBtn.classList.add("submit-btn-project");
-  newProject.appendChild(inputText);
-  newProject.appendChild(submitBtn);
-  projectsContainer.appendChild(newProject);
+  submitBtn.classList.add("submit-button-project");
+  submitBtn.style.display = "none";
+  projectsDiv.appendChild(projectParagraph);
+  projectsDiv.appendChild(inputText);
+  projectsDiv.appendChild(submitBtn);
+  projectsContainer.appendChild(projectsDiv);
 }
 
-export {
-  viewProjects,
-  addProjectBtn,
-  renderAddNewProject,
-  renderProjectSubmitBtn,
-};
+export { viewProjects, renderProjectsButton };

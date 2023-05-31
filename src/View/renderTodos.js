@@ -1,28 +1,23 @@
 import calendarSvg from "../svg-icons/calendar-white.svg";
 import trashcanSvg from "../svg-icons/trashcan-white.svg";
-import ProjectsFolder from "../Model/projectsFolder";
-
-const projects = ["0"];
 
 const todoContainer = document.getElementById("todo-container");
 const addTodosBtn = document.getElementById("add-todos-btn");
 
 // pass here todo, title, description, dueDate, priority, complete
 const viewTodos = {
-  renderTodos(todos, id) {
-    const findProjects = projects.find((project) => project.id === "0");
-    console.log(projects[0]);
+  renderTodos(todosArray, projectId) {
     // console.log(findProjects);
     // create the container that will append the other DOM element
     const todoDiv = document.createElement("div");
-    todoDiv.setAttribute("todos-id", todos.id);
+    todoDiv.setAttribute("todos-id", todosArray.id);
     todoDiv.classList.add("todos-content");
     // create radio button to set the todo's as complete
     const checkCompleteTodo = document.createElement("input");
     checkCompleteTodo.setAttribute("type", "radio");
     // create paragraph to set a title for the todo
     const titleTodo = document.createElement("p");
-    titleTodo.textContent = `${todos.title}`;
+    titleTodo.textContent = `${todosArray.title}`;
     titleTodo.classList.add("todo-content");
     // create paragraph to set a priority's for todo
     const priorityTodo = document.createElement("select");
@@ -67,57 +62,67 @@ const viewTodos = {
   },
 };
 
-const submitTodos = {
-  addTodo() {
-    // create the container that will append the other DOM elements
-    const todo = document.createElement("div");
-    todo.classList.add("todos");
-    // create radio button to set the todo's as complete
-    const checkCompleteTodo = document.createElement("input");
-    checkCompleteTodo.setAttribute("type", "radio");
-    // create paragraph to set a title for the todo
-    const inputText = document.createElement("input");
-    inputText.classList.add("input-text-todo");
-    // create select element to set a priority's for todo
-    const priorityTodo = document.createElement("select");
-    priorityTodo.classList.add("todo-content-priority");
-    const optionEmptyPriority = document.createElement("option");
-    optionEmptyPriority.text = "";
-    const optionLowPriority = document.createElement("option");
-    optionLowPriority.text = "low";
-    const optionMediumPriority = document.createElement("option");
-    optionMediumPriority.text = "medium";
-    const optionHighPriority = document.createElement("option");
-    optionHighPriority.text = "high";
-    // create paragraph to dueDate for todo
-    const dateTodo = document.createElement("p");
-    dateTodo.textContent = "24/05/23";
-    dateTodo.classList.add("todo-content-date");
-    // create calendarSVG icon
-    const calendarIcon = new Image();
-    calendarIcon.src = calendarSvg;
-    calendarIcon.classList.add("svg-icons", "todo-content-svg-icons");
-    const submitBtn = document.createElement("button");
-    submitBtn.setAttribute("type", "submit");
-    submitBtn.classList.add("submit-btn-todo");
-    submitBtn.textContent = "Submit";
-    todo.appendChild(checkCompleteTodo);
-    // append paragraph with title
-    todo.appendChild(inputText);
-    // append select with priority's
-    priorityTodo.appendChild(optionEmptyPriority);
-    priorityTodo.appendChild(optionLowPriority);
-    priorityTodo.appendChild(optionMediumPriority);
-    priorityTodo.appendChild(optionHighPriority);
-    todo.appendChild(priorityTodo);
-    // append paragraph with date
-    todo.appendChild(dateTodo);
-    // append calendar icon
-    todo.appendChild(calendarIcon);
-    // append trashcan icon
-    todo.appendChild(submitBtn);
-    todoContainer.appendChild(todo);
-  },
-};
+function renderTodosButton() {
+  // create the container that will append the other DOM elements
+  const todoDiv = document.createElement("div");
+  todoDiv.classList.add("todos-add-btn");
+  const todoParagraph = document.createElement("paragraph");
+  todoParagraph.textContent = "+ new task";
+  todoParagraph.style.display = "flex";
+  todoParagraph.classList.add("todo-paragraph");
+  // create radio button to set the todo's as complete
+  const checkCompleteTodo = document.createElement("input");
+  checkCompleteTodo.setAttribute("type", "radio");
+  checkCompleteTodo.style.display = "none";
+  checkCompleteTodo.classList.add("complete-todo-radio");
+  // create paragraph to set a title for the todo
+  const inputText = document.createElement("input");
+  inputText.classList.add("input-text-todo");
+  inputText.style.display = "none";
+  // create select element to set a priority's for todo
+  const priorityTodo = document.createElement("select");
+  priorityTodo.classList.add("todo-content-priority");
+  const optionEmptyPriority = document.createElement("option");
+  optionEmptyPriority.text = "";
+  const optionLowPriority = document.createElement("option");
+  optionLowPriority.text = "low";
+  const optionMediumPriority = document.createElement("option");
+  optionMediumPriority.text = "medium";
+  const optionHighPriority = document.createElement("option");
+  optionHighPriority.text = "high";
+  priorityTodo.style.display = "none";
+  // create paragraph to dueDate for todo
+  const dateTodo = document.createElement("p");
+  dateTodo.textContent = "24/05/23";
+  dateTodo.classList.add("todo-content-date");
+  dateTodo.style.display = "none";
+  // create calendarSVG icon
+  const calendarIcon = new Image();
+  calendarIcon.src = calendarSvg;
+  calendarIcon.classList.add("svg-icons", "todo-content-svg-icons");
+  calendarIcon.style.display = "none";
+  const submitBtn = document.createElement("button");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.classList.add("submit-btn-todo");
+  submitBtn.textContent = "Submit";
+  submitBtn.style.display = "none";
+  todoDiv.appendChild(todoParagraph);
+  todoDiv.appendChild(checkCompleteTodo);
+  // append paragraph with title
+  todoDiv.appendChild(inputText);
+  // append select with priority's
+  priorityTodo.appendChild(optionEmptyPriority);
+  priorityTodo.appendChild(optionLowPriority);
+  priorityTodo.appendChild(optionMediumPriority);
+  priorityTodo.appendChild(optionHighPriority);
+  todoDiv.appendChild(priorityTodo);
+  // append paragraph with date
+  todoDiv.appendChild(dateTodo);
+  // append calendar icon
+  todoDiv.appendChild(calendarIcon);
+  // append trashcan icon
+  todoDiv.appendChild(submitBtn);
+  todoContainer.appendChild(todoDiv);
+}
 
-export { viewTodos, addTodosBtn, submitTodos };
+export { viewTodos, addTodosBtn, renderTodosButton };
