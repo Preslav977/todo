@@ -54,7 +54,7 @@ body {
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   justify-content: space-between;
 }
 
@@ -80,7 +80,7 @@ body {
   display: flex;
   align-items: center;
   padding-left: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .todo-content {
@@ -96,7 +96,7 @@ body {
 }
 
 .todo-content-svg-icons {
-  margin-left: 25px;
+  margin-left: 45px;
 }
 
 .input-text-todo {
@@ -104,10 +104,16 @@ body {
   margin-left: 5px;
 }
 
+.todo-text-content {
+  width: 250px;
+}
+
 .todo-content-priority {
   /* width: 50px; */
   padding: 2px 8px;
   margin-left: 25px;
+  background-color: lightskyblue;
+  color: #fff;
 }
 
 .todo-content-date {
@@ -123,6 +129,11 @@ body {
 .todo-content-priority-menu {
   padding: 2px 8px;
   margin-left: 28.5em;
+}
+
+.project-paragraph,
+.todo-paragraph {
+  cursor: pointer;
 }
 
 .footer-container {

@@ -4,15 +4,18 @@ const projectsContainer = document.getElementById("project-container");
 
 const viewProjects = {
   renderProjects(projects) {
-    const projectDiv = document.createElement("div");
-    projectDiv.setAttribute("projects-id", projects.id);
-    projectDiv.textContent = `${projects.title}`;
-    projectDiv.classList.add("projects-content");
-    const trashcanIcon = new Image();
-    trashcanIcon.src = trashcanSvg;
-    trashcanIcon.classList.add("svg-icons");
-    projectDiv.appendChild(trashcanIcon);
-    projectsContainer.appendChild(projectDiv);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const project of projects) {
+      const projectDiv = document.createElement("div");
+      projectDiv.setAttribute("projects-id", project.id);
+      projectDiv.textContent = project.title;
+      projectDiv.classList.add("projects-content");
+      const trashcanIcon = new Image();
+      trashcanIcon.src = trashcanSvg;
+      trashcanIcon.classList.add("svg-icons");
+      projectDiv.appendChild(trashcanIcon);
+      projectsContainer.appendChild(projectDiv);
+    }
   },
 };
 
