@@ -15,10 +15,14 @@ const viewTodos = {
       // create radio button to set the todo's as complete
       const checkCompleteTodo = document.createElement("input");
       checkCompleteTodo.setAttribute("type", "radio");
+      checkCompleteTodo.setAttribute("name", "complete-todo");
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
       titleTodo.textContent = `${todo.title}`;
       titleTodo.classList.add("todo-content", "todo-text-content");
+      const descriptionTodo = document.createElement("p");
+      descriptionTodo.textContent = `${todo.description}`;
+      descriptionTodo.classList.add("todo-description");
       // create paragraph to set a priority's for todo
       const priorityTodo = document.createElement("select");
       priorityTodo.classList.add("todo-content-priority-menu");
@@ -33,7 +37,7 @@ const viewTodos = {
       // create paragraph to dueDate for todo
       const dateTodo = document.createElement("p");
       dateTodo.textContent = "25/05/23";
-      dateTodo.classList.add("todo-content");
+      dateTodo.classList.add("todo-date-content");
       // create calendarSVG icon
       const calendarIcon = new Image();
       calendarIcon.src = calendarSvg;
@@ -46,6 +50,7 @@ const viewTodos = {
       todoDiv.appendChild(checkCompleteTodo);
       // append paragraph with title
       todoDiv.appendChild(titleTodo);
+      todoDiv.appendChild(descriptionTodo);
       // append paragraph with priority's
       priorityTodo.appendChild(optionEmptyPriority);
       priorityTodo.appendChild(optionLowPriority);
@@ -72,17 +77,35 @@ function renderTodosButton() {
   todoParagraph.style.display = "flex";
   todoParagraph.classList.add("todo-paragraph");
   // create radio button to set the todo's as complete
+  const labelCompleteTodo = document.createElement("label");
+  labelCompleteTodo.setAttribute("for", "complete-todo");
   const checkCompleteTodo = document.createElement("input");
   checkCompleteTodo.setAttribute("type", "radio");
+  checkCompleteTodo.setAttribute("name", "complete-todo");
   checkCompleteTodo.style.display = "none";
   checkCompleteTodo.classList.add("complete-todo-radio");
   // create paragraph to set a title for the todo
+  const labelInputTodo = document.createElement("label");
+  labelInputTodo.setAttribute("for", "todo-title");
   const inputText = document.createElement("input");
   inputText.classList.add("input-text-todo");
+  inputText.setAttribute("name", "todo-title");
+  inputText.setAttribute("placeholder", "todo name");
   inputText.style.display = "none";
+  const labelDescriptionTodo = document.createElement("label");
+  labelDescriptionTodo.setAttribute("for", "description-todo");
+  const inputDescription = document.createElement("input");
+  inputDescription.classList.add("input-description-todo");
+  inputDescription.setAttribute("type", "text");
+  inputDescription.setAttribute("name", "description-todo");
+  inputDescription.setAttribute("placeholder", "todo description");
+  inputDescription.style.display = "none";
   // create select element to set a priority's for todo
+  const labelPriorityTodo = document.createElement("label");
+  labelPriorityTodo.setAttribute("for", "priority-todo");
   const priorityTodo = document.createElement("select");
   priorityTodo.classList.add("todo-content-priority");
+  priorityTodo.setAttribute("name", "priority-todo");
   const optionEmptyPriority = document.createElement("option");
   optionEmptyPriority.text = "";
   const optionLowPriority = document.createElement("option");
@@ -108,10 +131,15 @@ function renderTodosButton() {
   submitBtn.textContent = "Submit";
   submitBtn.style.display = "none";
   todoDiv.appendChild(todoParagraph);
+  todoDiv.appendChild(labelCompleteTodo);
   todoDiv.appendChild(checkCompleteTodo);
   // append paragraph with title
+  todoDiv.appendChild(labelInputTodo);
   todoDiv.appendChild(inputText);
+  todoDiv.appendChild(labelDescriptionTodo);
+  todoDiv.appendChild(inputDescription);
   // append select with priority's
+  todoDiv.appendChild(labelPriorityTodo);
   priorityTodo.appendChild(optionEmptyPriority);
   priorityTodo.appendChild(optionLowPriority);
   priorityTodo.appendChild(optionMediumPriority);

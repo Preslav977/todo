@@ -4,13 +4,14 @@ import ProjectsFolder from "./Model/projectsFolder";
 import CreateProject from "./Model/createProject";
 import { renderProjectsButton, viewProjects } from "./View/renderProjects";
 import { renderTodosButton, viewTodos } from "./View/renderTodos";
+import { CreateTodo } from "./Model/createTodo";
 
 // render between the adding new project and submitting an project
 renderProjectsButton();
-// const projectAddButton = document.querySelector(".project-add-btn");
 const projectParagraph = document.querySelector(".project-paragraph");
 const projectInput = document.querySelector(".input-text-project");
 const projectSubmitBtn = document.querySelector(".submit-button-project");
+const userProjectForm = document.querySelector(".project-form");
 
 // event to toggle the button from flex to hiding the element
 projectParagraph.addEventListener("click", () => {
@@ -35,24 +36,25 @@ projectInput.addEventListener("click", (e) => {
 });
 
 const projectsFolder = new ProjectsFolder("Folder");
-projectsFolder.addProjects("Default");
-projectsFolder.addProjects("New project");
+// projectsFolder.addProjects("New Project");
 // default object project
-const defaultProjects = new CreateProject("Default");
-defaultProjects.addToDo(
+
+const defaultProject = new CreateProject("Default");
+defaultProject.addToDo(
   "do some top",
   "finish some functionality",
   new Date(),
   "high",
   false
 );
-defaultProjects.addToDo(
+defaultProject.addToDo(
   "work at some todo",
   "finish show different todos",
   new Date(),
   "medium",
   true
 );
+
 // new project object
 const newProject = new CreateProject("New project");
 newProject.addToDo(
@@ -70,9 +72,11 @@ newProject.addToDo(
   false
 );
 
+// console.log(projectsFolder.projects);
+// console.log(defaultProject.todos)
+
 projectSubmitBtn.addEventListener("click", (e) => {
   e.stopPropagation();
-  e.preventDefault();
   // render the projects when the submit button is clicked
   // additional conditions to show add new project
   if (
@@ -83,34 +87,49 @@ projectSubmitBtn.addEventListener("click", (e) => {
     projectSubmitBtn.style.display = "none";
     projectParagraph.style.display = "flex";
   }
+  // // render projects
+  // viewProjects.renderProjects(projectsFolder.projects);
+  // // select all projects
+  // const projectsContentDiv = document.querySelectorAll(".projects-content");
+  // // loop them for an event what will tab switch what todos they have
+  // projectsContentDiv.forEach((project) => {
+  //   project.addEventListener("click", (e) => {
+  //     const getProjectIds = e.target;
+  //     const saveProjectsIds = getProjectIds.getAttribute("projects-id");
+  //     const todosContentDiv = document.querySelectorAll(".todos-content");
+  //     // if todos are found remove them
+  //     todosContentDiv.forEach((todo) => {
+  //       if (todo) {
+  //         todo.remove();
+  //       }
+  //     });
+  //   });
+  // });
+});
 
-  // render projects
+function createProjectsDOM(e) {
+  const projects = [];
+  const projectFormData = new FormData(e.target);
+  const projectObject = Object.fromEntries(projectFormData);
+  const getProjectName = projectObject["project-title"];
+  projectsFolder.addProjects(`${getProjectName}`);
+  const createNewProjectObject = new CreateProject(`${getProjectName}`);
+  projects.push(createNewProjectObject);
+  console.log(projectsFolder.projects);
+}
+
+function removeDuplicatedProject() {
+  const duplicatedProjects = document
+    .querySelectorAll(".projects-content")
+    .forEach((project) => project.remove());
+}
+
+userProjectForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  createProjectsDOM(e);
+  removeDuplicatedProject();
   viewProjects.renderProjects(projectsFolder.projects);
-  // select all projects
-  const projectsContentDiv = document.querySelectorAll(".projects-content");
-  console.log(projectsContentDiv);
-  // loop them for an event what will tab switch what todos they have
-  projectsContentDiv.forEach((project) => {
-    project.addEventListener("click", (e) => {
-      const getProjectIds = e.target;
-      const saveProjectsIds = getProjectIds.getAttribute("projects-id");
-      const todosContentDiv = document.querySelectorAll(".todos-content");
-      console.log(todosContentDiv);
-      // if todos are found remove them
-      todosContentDiv.forEach((todo) => {
-        console.log(todo);
-        if (todo) {
-          todo.remove();
-        }
-      });
-
-      if (projectsFolder.findProjectById(saveProjectsIds)) {
-        viewTodos.renderTodos(defaultProjects.todos);
-        // viewTodos.renderTodos(newProject.todos);
-      }
-      // console.log(projectsFolder.findProjectById(saveProjectsIds));
-    });
-  });
+  userProjectForm.reset();
 });
 
 // render between the adding new todo and submitting the project
@@ -119,16 +138,19 @@ renderTodosButton();
 const todoParagraph = document.querySelector(".todo-paragraph");
 const todoInput = document.querySelector(".input-text-todo");
 const checkCompleteTodo = document.querySelector(".complete-todo-radio");
+const todoDescription = document.querySelector(".input-description-todo");
 const priorityTodo = document.querySelector(".todo-content-priority");
 const dueDate = document.querySelector(".todo-content-date");
 const calendarIcon = document.querySelector(".svg-icons");
 const submitBtnTodo = document.querySelector(".submit-btn-todo");
+const userTodoForm = document.querySelector(".todo-form");
 
 // toggle between adding new todo and submitting it
 todoParagraph.addEventListener("click", () => {
   if (
     todoParagraph.style.display === "flex" &&
     todoInput.style.display === "none" &&
+    todoDescription.style.display === "none" &&
     checkCompleteTodo.style.display === "none" &&
     priorityTodo.style.display === "none" &&
     dueDate.style.display === "none" &&
@@ -137,6 +159,7 @@ todoParagraph.addEventListener("click", () => {
   ) {
     todoParagraph.style.display = "none";
     todoInput.style.display = "block";
+    todoDescription.style.display = "block";
     checkCompleteTodo.style.display = "block";
     priorityTodo.style.display = "block";
     dueDate.style.display = "block";
@@ -145,6 +168,7 @@ todoParagraph.addEventListener("click", () => {
   } else {
     todoParagraph.style.display = "flex";
     todoInput.style.display = "none";
+    todoDescription.style.display = "none";
     checkCompleteTodo.style.display = "none";
     priorityTodo.style.display = "none";
     dueDate.style.display = "none";
@@ -176,11 +200,11 @@ calendarIcon.addEventListener("click", (e) => {
 
 submitBtnTodo.addEventListener("click", (e) => {
   e.stopPropagation();
-  e.preventDefault();
   // additional conditions to change displaying between block to hide them
   if (
     todoParagraph.style.display === "none" &&
     todoInput.style.display === "block" &&
+    todoDescription.style.display === "block" &&
     checkCompleteTodo.style.display === "block" &&
     priorityTodo.style.display === "block" &&
     dueDate.style.display === "block" &&
@@ -189,6 +213,7 @@ submitBtnTodo.addEventListener("click", (e) => {
   ) {
     todoParagraph.style.display = "flex";
     todoInput.style.display = "none";
+    todoDescription.style.display = "none";
     checkCompleteTodo.style.display = "none";
     priorityTodo.style.display = "none";
     dueDate.style.display = "none";
@@ -196,6 +221,37 @@ submitBtnTodo.addEventListener("click", (e) => {
     submitBtnTodo.style.display = "none";
   }
   // render todos on submit
-  viewTodos.renderTodos(defaultProjects.todos);
-  viewTodos.renderTodos(newProject.todos);
+});
+
+function createTodosDOM(e) {
+  const todos = [];
+  const todoForm = new FormData(e.target);
+  const todoObject = Object.fromEntries(todoForm);
+  const getCompleteTodo = todoObject["complete-todo"];
+  const getTodoName = todoObject["todo-title"];
+  const getTodoDescription = todoObject["description-todo"];
+  const getTodoPriority = todoObject["priority-todo"];
+  const createNewTodoObject = new CreateTodo(
+    `${getCompleteTodo}`,
+    `${getTodoName}`,
+    `${getTodoDescription}`,
+    `${new Date()}`,
+    `${getTodoPriority}`
+  );
+  todos.push(createNewTodoObject);
+  console.log(todos);
+}
+
+function removeDuplicatedTodos() {
+  const duplicatedTodos = document
+    .querySelectorAll(".todos-content")
+    .forEach((todos) => todos.remove());
+}
+
+userTodoForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  createTodosDOM(e);
+  removeDuplicatedTodos();
+  viewTodos.renderTodos(defaultProject.todos);
+  userTodoForm.reset();
 });

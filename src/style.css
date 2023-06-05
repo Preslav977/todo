@@ -37,12 +37,11 @@ body {
 }
 
 .main-container {
-  /* outline: 2px solid black; */
   display: grid;
   grid-template-columns: 500px 2fr;
   grid-template-rows: 1fr;
-  min-height: 100%;
   margin-top: 20px;
+  min-height: 100%;
 }
 
 .project-add-btn,
@@ -75,7 +74,7 @@ body {
 .todos-add-btn,
 .todos-content {
   outline: 2px solid black;
-  margin: 20px 20px -12px 10px;
+  margin: 20px 20px -12px 8px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -87,6 +86,10 @@ body {
   padding-left: 10px;
 }
 
+.todo-date-content {
+  margin-left: 25em;
+}
+
 .todo-content:nth-child(3) {
   padding-left: 25em;
 }
@@ -96,20 +99,31 @@ body {
 }
 
 .todo-content-svg-icons {
-  margin-left: 45px;
+  margin-left: 46px;
 }
 
 .input-text-todo {
-  width: 600px;
+  width: 250px;
+  margin-left: 5px;
+}
+
+.input-description-todo {
+  width: 350px;
   margin-left: 5px;
 }
 
 .todo-text-content {
   width: 250px;
+  inline-size: 250px;
+}
+
+.todo-description {
+  width: 250px;
+  inline-size: 250px;
+  margin-left: 20px;
 }
 
 .todo-content-priority {
-  /* width: 50px; */
   padding: 2px 8px;
   margin-left: 25px;
   background-color: lightskyblue;
@@ -128,7 +142,7 @@ body {
 
 .todo-content-priority-menu {
   padding: 2px 8px;
-  margin-left: 28.5em;
+  margin-left: 8.6em;
 }
 
 .project-paragraph,

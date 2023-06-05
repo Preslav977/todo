@@ -4,18 +4,17 @@ const projectsContainer = document.getElementById("project-container");
 
 const viewProjects = {
   renderProjects(projects) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const project of projects) {
+    projects.forEach((project) => {
       const projectDiv = document.createElement("div");
       projectDiv.setAttribute("projects-id", project.id);
-      projectDiv.textContent = project.title;
+      projectDiv.textContent = `${project.title}`;
       projectDiv.classList.add("projects-content");
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
       trashcanIcon.classList.add("svg-icons");
       projectDiv.appendChild(trashcanIcon);
       projectsContainer.appendChild(projectDiv);
-    }
+    });
   },
 };
 
@@ -26,9 +25,12 @@ function renderProjectsButton() {
   projectParagraph.textContent = "+ new project";
   projectParagraph.classList.add("project-paragraph");
   projectParagraph.style.display = "flex";
+  const labelInputText = document.createElement("label");
+  labelInputText.setAttribute("for", "project-title");
   const inputText = document.createElement("input");
-  inputText.setAttribute("type", "submit");
+  inputText.setAttribute("name", "project-title");
   inputText.setAttribute("type", "text");
+  inputText.setAttribute("placeholder", "project name");
   inputText.classList.add("input-text-project");
   inputText.style.display = "none";
   const submitBtn = document.createElement("button");
@@ -36,9 +38,10 @@ function renderProjectsButton() {
   submitBtn.classList.add("submit-button-project");
   submitBtn.style.display = "none";
   projectsDiv.appendChild(projectParagraph);
+  projectsDiv.appendChild(labelInputText);
   projectsDiv.appendChild(inputText);
   projectsDiv.appendChild(submitBtn);
   projectsContainer.appendChild(projectsDiv);
 }
 
-export { viewProjects, renderProjectsButton };
+export { viewProjects, renderProjectsButton, projectsContainer };
