@@ -6,8 +6,7 @@ const todoContainer = document.getElementById("todo-container");
 // pass here todo, title, description, dueDate, priority, complete
 const viewTodos = {
   renderTodos(todosArray) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const todo of todosArray) {
+    todosArray.forEach((todo) => {
       // create the container that will append the other DOM element
       const todoDiv = document.createElement("div");
       todoDiv.setAttribute("todos-id", todo.id);
@@ -15,7 +14,6 @@ const viewTodos = {
       // create radio button to set the todo's as complete
       const checkCompleteTodo = document.createElement("input");
       checkCompleteTodo.setAttribute("type", "radio");
-      checkCompleteTodo.setAttribute("name", "complete-todo");
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
       titleTodo.textContent = `${todo.title}`;
@@ -23,7 +21,6 @@ const viewTodos = {
       const descriptionTodo = document.createElement("p");
       descriptionTodo.textContent = `${todo.description}`;
       descriptionTodo.classList.add("todo-description");
-      // create paragraph to set a priority's for todo
       const priorityTodo = document.createElement("select");
       priorityTodo.classList.add("todo-content-priority-menu");
       const optionEmptyPriority = document.createElement("option");
@@ -64,7 +61,7 @@ const viewTodos = {
       // append trashcan icon
       todoDiv.appendChild(trashcanIcon);
       todoContainer.appendChild(todoDiv);
-    }
+    });
   },
 };
 
@@ -154,4 +151,4 @@ function renderTodosButton() {
   todoContainer.appendChild(todoDiv);
 }
 
-export { viewTodos, renderTodosButton, todoContainer };
+export { viewTodos, renderTodosButton };

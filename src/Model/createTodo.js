@@ -1,8 +1,22 @@
 // This class is responsible for the todo/task and
 // nothing more than that.
 
+const randomUUID = function b(a) {
+  return a
+    ? // eslint-disable-next-line no-bitwise
+      (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+    : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b);
+};
+
 class CreateTodo {
-  constructor(title, description, dueDate, priority, complete, id) {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority,
+    complete,
+    id = randomUUID()
+  ) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -11,7 +25,7 @@ class CreateTodo {
     // this is done early in objects creation for
     // easy deletion later from the array and DOM
     this.complete = complete;
-    this.id = crypto.randomUUID();
+    this.id = id;
   }
 
   // read this property
