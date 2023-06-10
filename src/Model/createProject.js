@@ -35,7 +35,7 @@ class CreateProject {
     this._id = value;
   }
 
-  addToDo(title, description, dueDate, priority, complete, id = randomUUID()) {
+  addTodo(title, description, dueDate, priority, complete, id = randomUUID()) {
     const newToDo = new CreateTodo(
       title,
       description,
