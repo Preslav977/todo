@@ -109,12 +109,35 @@ function addTodoToSelectedProject(e) {
   viewTodos.renderTodos(foundProject.todos);
 }
 
+let tabSwitchProjectId;
+
+function projectTabSwitching(e) {
+  const selectAllExistingProjects =
+    document.querySelectorAll(".projects-content");
+  selectAllExistingProjects.forEach((project) => {
+    project.addEventListener("click", (e) => {
+      const clickedProject = e.target;
+      const getClickedProjectId = clickedProject.getAttribute("projects-id");
+      tabSwitchProjectId = projectsFolder.findProjectById(getClickedProjectId);
+      if (tabSwitchProjectId) {
+        const tabSwitchProjectsTodos =
+          document.querySelectorAll(".todos-content");
+        tabSwitchProjectsTodos.forEach((todo) => {
+          todo.remove();
+        });
+      }
+      viewTodos.renderTodos(tabSwitchProjectId.todos);
+    });
+  });
+}
+
 userProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
   removeDuplicatedProject();
   createProject(e);
   viewProject.renderProjects(projectsFolder.projects);
   findAndSelectProject(e);
+  projectTabSwitching(e);
   userProjectForm.reset();
 });
 
