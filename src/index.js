@@ -3,8 +3,6 @@ import "./style.css";
 import ProjectsFolder from "./Model/projectsFolder";
 import { renderProjectsButton, viewProject } from "./View/renderProjects";
 import { renderTodosButton, viewTodos } from "./View/renderTodos";
-import CreateProject from "./Model/createProject";
-import { CreateTodo } from "./Model/createTodo";
 
 // render between the adding new project and submitting an project
 renderProjectsButton();
@@ -51,16 +49,11 @@ projectSubmitBtn.addEventListener("click", (e) => {
   }
 });
 
-// const projects = [];
-
 function createProject(e) {
   const projectFormData = new FormData(e.target);
   const projectObject = Object.fromEntries(projectFormData);
   const getProjectTitle = projectObject["project-title"];
-  // this method creates new object of createProject class
   projectsFolder.addProjects(`${getProjectTitle}`);
-  // const createProjectObject = new CreateProject(`${getProjectTitle}`);
-  // projects.push(createProjectObject);
   console.log(projectsFolder.projects);
 }
 
@@ -231,27 +224,26 @@ submitBtnTodo.addEventListener("click", (e) => {
   }
 });
 
-const todos = [];
-
-// create the project here, and the todo
-// render the todo only here
-function createTodo(e) {
-  const todoForm = new FormData(e.target);
-  const todoObject = Object.fromEntries(todoForm);
-  const getCompleteTodo = todoObject["complete-todo"];
-  const getTodoTitle = todoObject["todo-title"];
-  const getTodoDescription = todoObject["description-todo"];
-  const getTodoPriority = todoObject["priority-todo"];
-  const createTodoObject = new CreateTodo(
-    `${getTodoTitle}`,
-    `${getTodoDescription}`,
-    new Date(),
-    `${getTodoPriority}`,
-    `${getCompleteTodo}`
-  );
-  todos.push(createTodoObject);
-  console.log(todos);
-}
+document.addEventListener("click", (e) => {
+  const projectAddButton = document.querySelector(".project-add-btn");
+  const todoAddButton = document.querySelector(".todos-add-btn");
+  if (
+    !projectAddButton.contains(e.target) &&
+    !todoAddButton.contains(e.target)
+  ) {
+    projectInput.style.display = "none";
+    projectSubmitBtn.style.display = "none";
+    projectParagraph.style.display = "flex";
+    todoInput.style.display = "none";
+    checkCompleteTodo.style.display = "none";
+    todoDescription.style.display = "none";
+    priorityTodo.style.display = "none";
+    dueDate.style.display = "none";
+    calendarIcon.style.display = "none";
+    submitBtnTodo.style.display = "none";
+    todoParagraph.style.display = "flex";
+  }
+});
 
 userTodoForm.addEventListener("submit", (e) => {
   e.preventDefault();
