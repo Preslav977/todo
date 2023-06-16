@@ -2,7 +2,7 @@ import trashcanSvg from "../svg-icons/trashcan-white.svg";
 
 const projectsContainer = document.getElementById("project-container");
 
-const viewProjects = {
+const viewProject = {
   renderProjects(projects) {
     projects.forEach((project) => {
       const projectDiv = document.createElement("div");
@@ -44,4 +44,4 @@ function renderProjectsButton() {
   projectsContainer.appendChild(projectsDiv);
 }
 
-export { viewProjects, renderProjectsButton, projectsContainer };
+export { viewProject, renderProjectsButton, projectsContainer };
