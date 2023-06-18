@@ -104,7 +104,7 @@ function addTodoToSelectedProject(e) {
 
 let tabSwitchProjectId;
 
-function projectTabSwitching(e) {
+function projectTabSwitching() {
   const selectAllExistingProjects =
     document.querySelectorAll(".projects-content");
   selectAllExistingProjects.forEach((project) => {
@@ -124,13 +124,37 @@ function projectTabSwitching(e) {
   });
 }
 
+function deleteProject() {
+  const projectTrashCan = document.querySelectorAll(".svg-icons-projects");
+  projectTrashCan.forEach((projectsTrashCans) => {
+    projectsTrashCans.addEventListener("click", (e) => {
+      // projectTrashCan.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const removeProjectBtn = e.target;
+      const removeProjectContainer = removeProjectBtn.parentNode;
+      const projectContainerId =
+        removeProjectContainer.getAttribute("projects-id");
+      const findProjectId = projectsFolder.projects.findIndex(
+        (project) => project.id === projectContainerId
+      );
+      console.log(findProjectId);
+      projectsFolder.projects.splice(findProjectId, 1);
+      console.log(projectsFolder.projects.splice(findProjectId, 1));
+      // console.log(projects);
+      const removeProject = removeProjectContainer.remove();
+      console.log(projectsFolder.projects);
+    });
+  });
+}
+
 userProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
   removeDuplicatedProject();
   createProject(e);
   viewProject.renderProjects(projectsFolder.projects);
   findAndSelectProject(e);
-  projectTabSwitching(e);
+  deleteProject();
+  projectTabSwitching();
   userProjectForm.reset();
 });
 
@@ -245,8 +269,34 @@ document.addEventListener("click", (e) => {
   }
 });
 
+const todos = [];
+
+function deleteTodo() {
+  const todoTrashCan = document.querySelectorAll(".svg-icons-todos");
+  todoTrashCan.forEach((todosTrashCans) => {
+    todosTrashCans.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const removeTodoBtn = e.target;
+      console.log(removeTodoBtn);
+      const removeTodoContainer = removeTodoBtn.parentNode;
+      console.log(removeTodoContainer);
+      const todoContainerId = removeTodoContainer.getAttribute("todos-id");
+      console.log(todoContainerId);
+      const findTodoId = foundProject.todos.findIndex(
+        (todo) => todo.id === todoContainerId
+      );
+      console.log(findTodoId);
+      foundProject.todos.splice(findTodoId, 1);
+      const removeTodo = removeTodoContainer.remove();
+      console.log(foundProject.todos);
+    });
+  });
+}
+
 userTodoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addTodoToSelectedProject(e);
+  deleteProject();
+  deleteTodo();
   userTodoForm.reset();
 });

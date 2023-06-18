@@ -64,7 +64,7 @@ const viewTodos = {
       // create trashcanSVG icon
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
-      trashcanIcon.classList.add("svg-icons", "todo-content-svg-icons");
+      trashcanIcon.classList.add("svg-icons-todos", "todo-content-svg-icons");
       // append radio button
       todoDiv.appendChild(checkCompleteTodo);
       // append paragraph with title

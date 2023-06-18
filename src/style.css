@@ -57,7 +57,8 @@ body {
   justify-content: space-between;
 }
 
-.svg-icons {
+.svg-icons-projects,
+.svg-icons-todos {
   width: 20px;
   cursor: pointer;
 }
