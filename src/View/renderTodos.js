@@ -13,7 +13,15 @@ const viewTodos = {
       todoDiv.classList.add("todos-content");
       // create radio button to set the todo's as complete
       const checkCompleteTodo = document.createElement("input");
-      checkCompleteTodo.setAttribute("type", "radio");
+      checkCompleteTodo.setAttribute("type", "checkbox");
+      checkCompleteTodo.setAttribute("value", "true");
+      checkCompleteTodo.classList.add("complete-todo-checkbox");
+      checkCompleteTodo.textContent = `${todo.complete}`;
+      if (checkCompleteTodo.textContent === "true") {
+        checkCompleteTodo.setAttribute("checked", "");
+      } else {
+        checkCompleteTodo.removeAttribute("checked");
+      }
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
       titleTodo.textContent = `${todo.title}`;
@@ -24,13 +32,27 @@ const viewTodos = {
       const priorityTodo = document.createElement("select");
       priorityTodo.classList.add("todo-content-priority-menu");
       const optionEmptyPriority = document.createElement("option");
+      optionEmptyPriority.setAttribute("value", "");
       optionEmptyPriority.text = "";
       const optionLowPriority = document.createElement("option");
+      optionLowPriority.setAttribute("value", "low");
       optionLowPriority.text = "low";
       const optionMediumPriority = document.createElement("option");
+      optionMediumPriority.setAttribute("value", "medium");
       optionMediumPriority.text = "medium";
       const optionHighPriority = document.createElement("option");
+      optionHighPriority.setAttribute("value", "high");
       optionHighPriority.text = "high";
+      priorityTodo.textContent = `${todo.priority}`;
+      if (priorityTodo.textContent === "low") {
+        optionLowPriority.setAttribute("selected", "default");
+      } else if (priorityTodo.textContent === "medium") {
+        optionMediumPriority.setAttribute("selected", "default");
+      } else if (priorityTodo.textContent === "high") {
+        optionHighPriority.setAttribute("selected", "default");
+      } else {
+        optionEmptyPriority.setAttribute("selected", "default");
+      }
       // create paragraph to dueDate for todo
       const dateTodo = document.createElement("p");
       dateTodo.textContent = "25/05/23";
@@ -77,10 +99,11 @@ function renderTodosButton() {
   const labelCompleteTodo = document.createElement("label");
   labelCompleteTodo.setAttribute("for", "complete-todo");
   const checkCompleteTodo = document.createElement("input");
-  checkCompleteTodo.setAttribute("type", "radio");
+  checkCompleteTodo.setAttribute("type", "checkbox");
   checkCompleteTodo.setAttribute("name", "complete-todo");
+  checkCompleteTodo.setAttribute("value", "true");
   checkCompleteTodo.style.display = "none";
-  checkCompleteTodo.classList.add("complete-todo-radio");
+  checkCompleteTodo.classList.add("complete-todo-checkbox");
   // create paragraph to set a title for the todo
   const labelInputTodo = document.createElement("label");
   labelInputTodo.setAttribute("for", "todo-title");
@@ -104,12 +127,17 @@ function renderTodosButton() {
   priorityTodo.classList.add("todo-content-priority");
   priorityTodo.setAttribute("name", "priority-todo");
   const optionEmptyPriority = document.createElement("option");
+  optionEmptyPriority.setAttribute("value", "");
   optionEmptyPriority.text = "";
   const optionLowPriority = document.createElement("option");
+  optionLowPriority.setAttribute("value", "low");
+  optionLowPriority.setAttribute("selected", "default");
   optionLowPriority.text = "low";
   const optionMediumPriority = document.createElement("option");
+  optionMediumPriority.setAttribute("value", "medium");
   optionMediumPriority.text = "medium";
   const optionHighPriority = document.createElement("option");
+  optionHighPriority.setAttribute("value", "high");
   optionHighPriority.text = "high";
   priorityTodo.style.display = "none";
   // create paragraph to dueDate for todo

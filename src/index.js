@@ -139,7 +139,7 @@ renderTodosButton();
 // const todoAddButton = document.querySelector(".todos-add-btn");
 const todoParagraph = document.querySelector(".todo-paragraph");
 const todoInput = document.querySelector(".input-text-todo");
-const checkCompleteTodo = document.querySelector(".complete-todo-radio");
+const checkCompleteTodo = document.querySelector(".complete-todo-checkbox");
 const todoDescription = document.querySelector(".input-description-todo");
 const priorityTodo = document.querySelector(".todo-content-priority");
 const dueDate = document.querySelector(".todo-content-date");
