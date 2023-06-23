@@ -34,6 +34,8 @@ projectInput.addEventListener("click", (e) => {
 });
 
 const projectsFolder = new ProjectsFolder("Folder");
+projectsFolder.addProjects("Default");
+viewProject.renderProjects(projectsFolder.projects);
 
 projectSubmitBtn.addEventListener("click", (e) => {
   e.stopPropagation();
@@ -65,7 +67,7 @@ function removeDuplicatedProject() {
 
 let foundProject;
 
-function findAndSelectProject(e) {
+function findAndSelectProject() {
   const selectAllProjects = document.querySelectorAll(".projects-content");
   selectAllProjects.forEach((project) => {
     project.addEventListener("click", (e) => {
@@ -128,7 +130,6 @@ function deleteProject() {
   const projectTrashCan = document.querySelectorAll(".svg-icons-projects");
   projectTrashCan.forEach((projectsTrashCans) => {
     projectsTrashCans.addEventListener("click", (e) => {
-      // projectTrashCan.addEventListener("click", (e) => {
       e.stopPropagation();
       const removeProjectBtn = e.target;
       const removeProjectContainer = removeProjectBtn.parentNode;
@@ -140,19 +141,19 @@ function deleteProject() {
       console.log(findProjectId);
       projectsFolder.projects.splice(findProjectId, 1);
       console.log(projectsFolder.projects.splice(findProjectId, 1));
-      // console.log(projects);
       const removeProject = removeProjectContainer.remove();
-      console.log(projectsFolder.projects);
     });
   });
 }
+
+findAndSelectProject();
 
 userProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
   removeDuplicatedProject();
   createProject(e);
   viewProject.renderProjects(projectsFolder.projects);
-  findAndSelectProject(e);
+  findAndSelectProject();
   deleteProject();
   projectTabSwitching();
   userProjectForm.reset();
@@ -248,6 +249,8 @@ submitBtnTodo.addEventListener("click", (e) => {
   }
 });
 
+// events to hide certain elements if the user
+// clicks away from them
 document.addEventListener("click", (e) => {
   const projectAddButton = document.querySelector(".project-add-btn");
   const todoAddButton = document.querySelector(".todos-add-btn");
@@ -269,33 +272,105 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const todos = [];
-
 function deleteTodo() {
   const todoTrashCan = document.querySelectorAll(".svg-icons-todos");
   todoTrashCan.forEach((todosTrashCans) => {
     todosTrashCans.addEventListener("click", (e) => {
       e.stopPropagation();
       const removeTodoBtn = e.target;
-      console.log(removeTodoBtn);
       const removeTodoContainer = removeTodoBtn.parentNode;
-      console.log(removeTodoContainer);
       const todoContainerId = removeTodoContainer.getAttribute("todos-id");
-      console.log(todoContainerId);
       const findTodoId = foundProject.todos.findIndex(
         (todo) => todo.id === todoContainerId
       );
-      console.log(findTodoId);
       foundProject.todos.splice(findTodoId, 1);
       const removeTodo = removeTodoContainer.remove();
-      console.log(foundProject.todos);
     });
   });
+}
+
+let completedTodoBtn;
+let findTodoId;
+
+function findCompletedOrNotTodos(e) {
+  completedTodoBtn = e.target;
+  const completedTodoBtnContainer = completedTodoBtn.parentNode;
+  const completedTodoContainerId =
+    completedTodoBtnContainer.getAttribute("todos-id");
+  findTodoId = foundProject.findTodoById(completedTodoContainerId);
+  if (findTodoId) {
+    return findTodoId;
+  }
+}
+
+function changeTodoCompleteProperty() {
+  if (completedTodoBtn.textContent === "undefined") {
+    findTodoId.changeCompleteProperty();
+    completedTodoBtn.setAttribute("checked", "");
+    console.log(findTodoId);
+  } else {
+    findTodoId.changeCompleteProperty();
+    completedTodoBtn.removeAttribute("checked");
+    console.log(findTodoId);
+  }
+}
+
+let priorityOption;
+
+function findPriorityTodos(e) {
+  priorityOption = e.target;
+  const priorityContainer = priorityOption.parentNode;
+  const priorityOptionId = priorityContainer.getAttribute("todos-id");
+  findTodoId = foundProject.findTodoById(priorityOptionId);
+  if (findTodoId) {
+    return findTodoId;
+  }
+}
+
+function changeTodoPriorityProperty() {
+  const optionEmptyPriority = document.getElementById("empty-priority");
+  const optionLowPriority = document.getElementById("low-priority");
+  const optionMediumPriority = document.getElementById("medium-priority");
+  const optionHighPriority = document.getElementById("high-priority");
+  if (priorityOption.value === "low") {
+    optionLowPriority.setAttribute("selected", "default");
+    findTodoId.changePriorityProperty([0]);
+  } else if (priorityOption.value === "medium") {
+    optionMediumPriority.setAttribute("selected", "default");
+    findTodoId.changePriorityProperty([1]);
+  } else if (priorityOption.value === "high") {
+    optionHighPriority.setAttribute("selected", "default");
+    findTodoId.changePriorityProperty([2]);
+  } else {
+    optionEmptyPriority.setAttribute("selected", "default");
+    findTodoId.changePriorityProperty([3]);
+  }
+  console.log(findTodoId);
 }
 
 userTodoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addTodoToSelectedProject(e);
+
+  const completedTodoCheckbox = document.querySelectorAll(
+    "#completed-todo-checkbox"
+  );
+  completedTodoCheckbox.forEach((todoCheckbox) => {
+    todoCheckbox.addEventListener("click", (e) => {
+      findCompletedOrNotTodos(e);
+      changeTodoCompleteProperty();
+    });
+  });
+
+  const priorityTodoDropdown = document.querySelectorAll(
+    "#priority-todo-dropdown"
+  );
+  priorityTodoDropdown.forEach((todoPriority) => {
+    todoPriority.addEventListener("change", (e) => {
+      findPriorityTodos(e);
+      changeTodoPriorityProperty();
+    });
+  });
   deleteProject();
   deleteTodo();
   userTodoForm.reset();

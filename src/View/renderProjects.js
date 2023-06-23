@@ -12,6 +12,7 @@ const viewProject = {
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
       trashcanIcon.classList.add("svg-icons-projects");
+      trashcanIcon.setAttribute("id", "trashcan-icon");
       projectDiv.appendChild(trashcanIcon);
       projectsContainer.appendChild(projectDiv);
     });

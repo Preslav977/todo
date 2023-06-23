@@ -89,6 +89,39 @@ class CreateTodo {
   set id(value) {
     this._id = value;
   }
+
+  changeCompleteProperty() {
+    if (this.complete === "undefined") {
+      this._complete = "true";
+    } else {
+      this._complete = "undefined";
+    }
+  }
+
+  changePriorityProperty([index]) {
+    const a = [
+      (this._priority = "low"),
+      (this._priority = "medium"),
+      (this._priority = "high"),
+      (this._priority = ""),
+    ];
+
+    if (this._priority !== "low") {
+      this._priority = a[index];
+    }
+
+    if (this._priority !== "medium") {
+      this._priority = a[index];
+    }
+
+    if (this._priority !== "high") {
+      this._priority = a[index];
+    }
+
+    if (this._priority !== "") {
+      this._priority = a[index];
+    }
+  }
 }
 
 export { CreateTodo };

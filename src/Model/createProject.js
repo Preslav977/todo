@@ -47,7 +47,7 @@ class CreateProject {
     this.todos.push(newToDo);
   }
 
-  findToDoById(todoId) {
+  findTodoById(todoId) {
     return this.todos.find((todo) => todo.id === todoId);
   }
 
@@ -59,7 +59,7 @@ class CreateProject {
     return this.todos.filter(filterFunctionTodos);
   }
 
-  editToDo(oldToDoTitle, newToDoTitle) {
+  editTodo(oldToDoTitle, newToDoTitle) {
     const findTodo = this.todos.find(
       (project) => project.title === oldToDoTitle
     );
@@ -71,7 +71,7 @@ class CreateProject {
     return findTodo;
   }
 
-  deleteToDo(index) {
+  deleteTodo(index) {
     this.todos.splice(index, 1);
   }
 }
