@@ -138,7 +138,6 @@ function deleteProject() {
       const findProjectId = projectsFolder.projects.findIndex(
         (project) => project.id === projectContainerId
       );
-      console.log(findProjectId);
       projectsFolder.projects.splice(findProjectId, 1);
       console.log(projectsFolder.projects.splice(findProjectId, 1));
       const removeProject = removeProjectContainer.remove();
@@ -294,6 +293,7 @@ let findTodoId;
 
 function findCompletedOrNotTodos(e) {
   completedTodoBtn = e.target;
+  console.log(completedTodoBtn);
   const completedTodoBtnContainer = completedTodoBtn.parentNode;
   const completedTodoContainerId =
     completedTodoBtnContainer.getAttribute("todos-id");
@@ -307,12 +307,11 @@ function changeTodoCompleteProperty() {
   if (completedTodoBtn.textContent === "undefined") {
     findTodoId.changeCompleteProperty();
     completedTodoBtn.setAttribute("checked", "");
-    console.log(findTodoId);
   } else {
     findTodoId.changeCompleteProperty();
     completedTodoBtn.removeAttribute("checked");
-    console.log(findTodoId);
   }
+  console.log(findTodoId);
 }
 
 let priorityOption;
@@ -328,21 +327,17 @@ function findPriorityTodos(e) {
 }
 
 function changeTodoPriorityProperty() {
-  const optionEmptyPriority = document.getElementById("empty-priority");
-  const optionLowPriority = document.getElementById("low-priority");
-  const optionMediumPriority = document.getElementById("medium-priority");
-  const optionHighPriority = document.getElementById("high-priority");
+  // const optionEmptyPriority = document.getElementById("empty-priority");
+  // const optionLowPriority = document.getElementById("low-priority");
+  // const optionMediumPriority = document.getElementById("medium-priority");
+  // const optionHighPriority = document.getElementById("high-priority");
   if (priorityOption.value === "low") {
-    optionLowPriority.setAttribute("selected", "default");
     findTodoId.changePriorityProperty([0]);
   } else if (priorityOption.value === "medium") {
-    optionMediumPriority.setAttribute("selected", "default");
     findTodoId.changePriorityProperty([1]);
   } else if (priorityOption.value === "high") {
-    optionHighPriority.setAttribute("selected", "default");
     findTodoId.changePriorityProperty([2]);
   } else {
-    optionEmptyPriority.setAttribute("selected", "default");
     findTodoId.changePriorityProperty([3]);
   }
   console.log(findTodoId);
@@ -367,10 +362,12 @@ userTodoForm.addEventListener("submit", (e) => {
   );
   priorityTodoDropdown.forEach((todoPriority) => {
     todoPriority.addEventListener("change", (e) => {
+      console.log(todoPriority);
       findPriorityTodos(e);
       changeTodoPriorityProperty();
     });
   });
+
   deleteProject();
   deleteTodo();
   userTodoForm.reset();

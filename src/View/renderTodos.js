@@ -20,10 +20,8 @@ const viewTodos = {
       checkCompleteTodo.textContent = `${todo.complete}`;
       if (checkCompleteTodo.textContent === "true") {
         checkCompleteTodo.setAttribute("checked", "");
-        todoDiv.style.backgroundColor = "orange";
       } else {
         checkCompleteTodo.removeAttribute("checked");
-        todoDiv.style.backgroundColor = "lightbluesky";
       }
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
@@ -38,22 +36,18 @@ const viewTodos = {
       const optionEmptyPriority = document.createElement("option");
       optionEmptyPriority.setAttribute("value", "");
       optionEmptyPriority.text = "";
-      optionEmptyPriority.classList.add("dropdown-priority-option");
       optionEmptyPriority.setAttribute("id", "empty-priority");
       const optionLowPriority = document.createElement("option");
       optionLowPriority.setAttribute("value", "low");
       optionLowPriority.text = "low";
-      optionLowPriority.classList.add("dropdown-priority-option");
       optionLowPriority.setAttribute("id", "low-priority");
       const optionMediumPriority = document.createElement("option");
       optionMediumPriority.setAttribute("value", "medium");
       optionMediumPriority.text = "medium";
-      optionMediumPriority.classList.add("dropdown-priority-option");
       optionMediumPriority.setAttribute("id", "medium-priority");
       const optionHighPriority = document.createElement("option");
       optionHighPriority.setAttribute("value", "high");
       optionHighPriority.text = "high";
-      optionHighPriority.classList.add("dropdown-priority-option");
       optionHighPriority.setAttribute("id", "high-priority");
       priorityTodo.textContent = `${todo.priority}`;
       if (priorityTodo.textContent === "low") {

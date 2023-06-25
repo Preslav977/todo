@@ -99,7 +99,7 @@ class CreateTodo {
   }
 
   changePriorityProperty([index]) {
-    const a = [
+    const priority = [
       (this._priority = "low"),
       (this._priority = "medium"),
       (this._priority = "high"),
@@ -107,19 +107,19 @@ class CreateTodo {
     ];
 
     if (this._priority !== "low") {
-      this._priority = a[index];
+      this._priority = priority[index];
     }
 
     if (this._priority !== "medium") {
-      this._priority = a[index];
+      this._priority = priority[index];
     }
 
     if (this._priority !== "high") {
-      this._priority = a[index];
+      this._priority = priority[index];
     }
 
     if (this._priority !== "") {
-      this._priority = a[index];
+      this._priority = priority[index];
     }
   }
 }
