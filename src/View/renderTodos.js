@@ -36,19 +36,14 @@ const viewTodos = {
       const optionEmptyPriority = document.createElement("option");
       optionEmptyPriority.setAttribute("value", "");
       optionEmptyPriority.text = "";
-      optionEmptyPriority.setAttribute("id", "empty-priority");
       const optionLowPriority = document.createElement("option");
       optionLowPriority.setAttribute("value", "low");
       optionLowPriority.text = "low";
-      optionLowPriority.setAttribute("id", "low-priority");
       const optionMediumPriority = document.createElement("option");
       optionMediumPriority.setAttribute("value", "medium");
       optionMediumPriority.text = "medium";
-      optionMediumPriority.setAttribute("id", "medium-priority");
       const optionHighPriority = document.createElement("option");
-      optionHighPriority.setAttribute("value", "high");
       optionHighPriority.text = "high";
-      optionHighPriority.setAttribute("id", "high-priority");
       priorityTodo.textContent = `${todo.priority}`;
       if (priorityTodo.textContent === "low") {
         optionLowPriority.setAttribute("selected", "default");

@@ -139,7 +139,6 @@ function deleteProject() {
         (project) => project.id === projectContainerId
       );
       projectsFolder.projects.splice(findProjectId, 1);
-      console.log(projectsFolder.projects.splice(findProjectId, 1));
       const removeProject = removeProjectContainer.remove();
     });
   });
@@ -293,7 +292,6 @@ let findTodoId;
 
 function findCompletedOrNotTodos(e) {
   completedTodoBtn = e.target;
-  console.log(completedTodoBtn);
   const completedTodoBtnContainer = completedTodoBtn.parentNode;
   const completedTodoContainerId =
     completedTodoBtnContainer.getAttribute("todos-id");
@@ -327,10 +325,6 @@ function findPriorityTodos(e) {
 }
 
 function changeTodoPriorityProperty() {
-  // const optionEmptyPriority = document.getElementById("empty-priority");
-  // const optionLowPriority = document.getElementById("low-priority");
-  // const optionMediumPriority = document.getElementById("medium-priority");
-  // const optionHighPriority = document.getElementById("high-priority");
   if (priorityOption.value === "low") {
     findTodoId.changePriorityProperty([0]);
   } else if (priorityOption.value === "medium") {
@@ -346,29 +340,41 @@ function changeTodoPriorityProperty() {
 userTodoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addTodoToSelectedProject(e);
+  // const completedTodoCheckbox = document.querySelectorAll(
+  //   "#completed-todo-checkbox"
+  // );
+  // completedTodoCheckbox.forEach((todoCheckbox) => {
+  //   todoCheckbox.addEventListener("click", (e) => {
+  //     findCompletedOrNotTodos(e);
+  //     changeTodoCompleteProperty();
+  //   });
+  // });
 
-  const completedTodoCheckbox = document.querySelectorAll(
-    "#completed-todo-checkbox"
-  );
-  completedTodoCheckbox.forEach((todoCheckbox) => {
-    todoCheckbox.addEventListener("click", (e) => {
-      findCompletedOrNotTodos(e);
-      changeTodoCompleteProperty();
-    });
-  });
-
-  const priorityTodoDropdown = document.querySelectorAll(
-    "#priority-todo-dropdown"
-  );
-  priorityTodoDropdown.forEach((todoPriority) => {
-    todoPriority.addEventListener("change", (e) => {
-      console.log(todoPriority);
-      findPriorityTodos(e);
-      changeTodoPriorityProperty();
-    });
-  });
+  // const priorityTodoDropdown = document.querySelectorAll(
+  //   "#priority-todo-dropdown"
+  // );
+  // priorityTodoDropdown.forEach((todoPriority) => {
+  //   todoPriority.addEventListener("change", (e) => {
+  //     findPriorityTodos(e);
+  //     changeTodoPriorityProperty();
+  //   });
+  // });
 
   deleteProject();
-  deleteTodo();
+  // deleteTodo();
   userTodoForm.reset();
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.className === "complete-todo-checkbox") {
+    findCompletedOrNotTodos(e);
+    changeTodoCompleteProperty();
+  }
+});
+
+document.addEventListener("change", (e) => {
+  if (e.target.className === "todo-content-priority-menu") {
+    findPriorityTodos(e);
+    changeTodoPriorityProperty();
+  }
 });
