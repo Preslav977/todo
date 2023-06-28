@@ -122,6 +122,12 @@ class CreateTodo {
       this._priority = priority[index];
     }
   }
+
+  changeDateProperty(value) {
+    if (this._dueDate !== "") {
+      this._dueDate = value;
+    }
+  }
 }
 
 export { CreateTodo };

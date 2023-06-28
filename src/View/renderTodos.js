@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import calendarSvg from "../svg-icons/calendar-white.svg";
 import trashcanSvg from "../svg-icons/trashcan-white.svg";
 
@@ -56,16 +57,28 @@ const viewTodos = {
       }
       // create paragraph to dueDate for todo
       const dateTodo = document.createElement("p");
-      dateTodo.textContent = "25/05/23";
       dateTodo.classList.add("todo-date-content");
+      dateTodo.textContent = `${todo.dueDate}`;
+      if (`${todo.dueDate}` === "") {
+        dateTodo.textContent = format(new Date(), "dd-MM-yyyy");
+      }
       // create calendarSVG icon
+      const todoDateSpan = document.createElement("span");
+      todoDateSpan.classList.add("todo-date-span");
+      todoDateSpan.setAttribute("todos-id", todo.id);
       const calendarIcon = new Image();
       calendarIcon.src = calendarSvg;
-      calendarIcon.classList.add("svg-icons", "todo-content-svg-icons");
+      calendarIcon.classList.add("svg-icons", "todo-calendar-svg-icon");
+      const todoDateInput = document.createElement("input");
+      todoDateInput.setAttribute("type", "date");
+      todoDateInput.classList.add("todo-date-input");
+      todoDateInput.addEventListener("change", () => {
+        dateTodo.textContent = `${todoDateInput.value}`;
+      });
       // create trashcanSVG icon
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
-      trashcanIcon.classList.add("svg-icons-todos", "todo-content-svg-icons");
+      trashcanIcon.classList.add("svg-icons-todos", "todo-trashcan-svg-icon");
       trashcanIcon.setAttribute("id", "trashcan-icon");
       // append radio button
       todoDiv.appendChild(checkCompleteTodo);
@@ -80,8 +93,11 @@ const viewTodos = {
       todoDiv.appendChild(priorityTodo);
       // append paragraph with date
       todoDiv.appendChild(dateTodo);
+      todoDateSpan.appendChild(calendarIcon);
+      todoDateSpan.appendChild(todoDateInput);
+      todoDiv.appendChild(todoDateSpan);
       // append calendar icon
-      todoDiv.appendChild(calendarIcon);
+      // todoDiv.appendChild(calendarIcon);
       // append trashcan icon
       todoDiv.appendChild(trashcanIcon);
       todoContainer.appendChild(todoDiv);
@@ -144,19 +160,33 @@ function renderTodosButton() {
   priorityTodo.style.display = "none";
   // create paragraph to dueDate for todo
   const dateTodo = document.createElement("p");
-  dateTodo.textContent = "24/05/23";
+  dateTodo.textContent = format(new Date(), "dd-MM-yyyy");
   dateTodo.classList.add("todo-content-date");
   dateTodo.style.display = "none";
   // create calendarSVG icon
+  const todoDateSpan = document.createElement("span");
+  todoDateSpan.classList.add("todo-date-span");
   const calendarIcon = new Image();
   calendarIcon.src = calendarSvg;
-  calendarIcon.classList.add("svg-icons", "todo-content-svg-icons");
+  calendarIcon.classList.add("svg-icons", "todo-calendar-svg-icon");
   calendarIcon.style.display = "none";
+  const labelTodoDateInput = document.createElement("label");
+  labelTodoDateInput.setAttribute("for", "todo-date");
+  const todoDateInput = document.createElement("input");
+  todoDateInput.setAttribute("type", "date");
+  todoDateInput.classList.add("todo-date-input");
+  todoDateInput.setAttribute("name", "todo-date");
+  todoDateInput.addEventListener("change", () => {
+    dateTodo.textContent = `${todoDateInput.value}`;
+  });
   const submitBtn = document.createElement("button");
   submitBtn.setAttribute("type", "submit");
   submitBtn.classList.add("submit-btn-todo");
   submitBtn.textContent = "Submit";
   submitBtn.style.display = "none";
+  todoDateSpan.appendChild(calendarIcon);
+  todoDateSpan.appendChild(labelTodoDateInput);
+  todoDateSpan.appendChild(todoDateInput);
   todoDiv.appendChild(todoParagraph);
   todoDiv.appendChild(labelCompleteTodo);
   todoDiv.appendChild(checkCompleteTodo);
@@ -175,7 +205,9 @@ function renderTodosButton() {
   // append paragraph with date
   todoDiv.appendChild(dateTodo);
   // append calendar icon
-  todoDiv.appendChild(calendarIcon);
+  // todoDiv.appendChild(labelTodoDateInput);
+  todoDiv.appendChild(todoDateSpan);
+  // todoDiv.appendChild(calendarIcon);
   // append trashcan icon
   todoDiv.appendChild(submitBtn);
   todoContainer.appendChild(todoDiv);

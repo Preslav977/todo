@@ -1,5 +1,6 @@
 import "./style.css";
 
+import { format, parseISO } from "date-fns";
 import ProjectsFolder from "./Model/projectsFolder";
 import { renderProjectsButton, viewProject } from "./View/renderProjects";
 import { renderTodosButton, viewTodos } from "./View/renderTodos";
@@ -88,10 +89,16 @@ function addTodoToSelectedProject(e) {
   const getTodoTitle = todoObject["todo-title"];
   const getTodoDescription = todoObject["description-todo"];
   const getTodoPriority = todoObject["priority-todo"];
+  let getTodoDate = todoObject["todo-date"];
+  if (getTodoDate === "") {
+    getTodoDate = format(new Date(), "dd-MM-yyyy");
+  } else {
+    getTodoDate = format(parseISO(getTodoDate), "dd-MM-yyyy");
+  }
   foundProject.addTodo(
     `${getTodoTitle}`,
     `${getTodoDescription}`,
-    new Date(),
+    `${getTodoDate}`,
     `${getTodoPriority}`,
     `${getCompleteTodo}`
   );
@@ -115,7 +122,6 @@ function projectTabSwitching() {
       const getClickedProjectId = clickedProject.getAttribute("projects-id");
       tabSwitchProjectId = projectsFolder.findProjectById(getClickedProjectId);
       if (tabSwitchProjectId) {
-        console.log(tabSwitchProjectId);
         const tabSwitchProjectsTodos =
           document.querySelectorAll(".todos-content");
         tabSwitchProjectsTodos.forEach((todo) => {
@@ -365,6 +371,29 @@ function changeTodoPriorityProperty() {
   console.log(findTodoId);
 }
 
+let dueDateTodo;
+let getDueDate;
+
+function findDateTodos(e) {
+  dueDateTodo = e.target;
+  getDueDate = format(parseISO(dueDateTodo.value), "dd-MM-yyyy");
+  console.log(getDueDate);
+  // getDueDate = dueDateTodo.value;
+  const dueDateContainer = dueDateTodo.parentNode;
+  const dueDateContainerId = dueDateContainer.getAttribute("todos-id");
+  findTodoId = foundProject.findTodoById(dueDateContainerId);
+  if (findTodoId) {
+    return findTodoId;
+  }
+}
+
+function changeTodoDueDateProperty() {
+  if (deleteTodo.value !== "") {
+    findTodoId.changeDateProperty(getDueDate);
+    console.log(findTodoId);
+  }
+}
+
 userTodoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addTodoToSelectedProject(e);
@@ -383,5 +412,12 @@ document.addEventListener("change", (e) => {
   if (e.target.className === "todo-content-priority-menu") {
     findPriorityTodos(e);
     changeTodoPriorityProperty();
+  }
+});
+
+document.addEventListener("change", (e) => {
+  if (e.target.className === "todo-date-input") {
+    findDateTodos(e);
+    changeTodoDueDateProperty(getDueDate);
   }
 });

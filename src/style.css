@@ -75,7 +75,7 @@ body {
 .todos-add-btn,
 .todos-content {
   outline: 2px solid black;
-  margin: 20px 20px -12px 8px;
+  margin: 20px 15px -12px 5px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -93,14 +93,16 @@ body {
 
 .todo-content:nth-child(3) {
   padding-left: 25em;
+  border: 2px solid beige;
 }
 
 .todo-content:nth-child(4) {
   padding-left: 25.5em;
+  border: 2px solid blue;
 }
 
-.todo-content-svg-icons {
-  margin-left: 46px;
+.todo-trashcan-svg-icon {
+  margin-left: 80px;
 }
 
 .input-text-todo {
@@ -126,7 +128,7 @@ body {
 
 .todo-content-priority {
   padding: 2px 8px;
-  margin-left: 25px;
+  margin-left: 29px;
   background-color: lightskyblue;
   color: #fff;
 }
@@ -136,14 +138,14 @@ body {
 }
 
 .submit-btn-todo {
-  width: 100px;
+  width: 80px;
   margin-right: 10px;
-  margin-left: 12px;
+  margin-left: 50px;
 }
 
 .todo-content-priority-menu {
   padding: 2px 8px;
-  margin-left: 8.6em;
+  margin-left: 9em;
   background-color: lightskyblue;
   color: #fff;
 }
@@ -166,4 +168,32 @@ body {
   align-items: center;
   justify-content: center;
   height: 50px;
+}
+
+.todo-date-span {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  height: 19px;
+}
+
+.todo-calendar-svg-icon {
+  margin-left: 30px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.todo-date-input {
+  position: absolute;
+  left: 140%;
+  top: -10%;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 2px solid black;
 }
