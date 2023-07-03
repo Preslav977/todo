@@ -10,7 +10,7 @@ renderProjectsButton();
 const projectParagraph = document.querySelector(".project-paragraph");
 const projectInput = document.querySelector(".input-text-project");
 const projectSubmitBtn = document.querySelector(".submit-button-project");
-const userProjectForm = document.querySelector(".project-form");
+const userProjectForm = document.getElementById("project-form");
 
 // event to toggle the button from flex to hiding the element
 projectParagraph.addEventListener("click", () => {
@@ -49,8 +49,18 @@ projectSubmitBtn.addEventListener("click", (e) => {
 });
 
 const projectsFolder = new ProjectsFolder("Folder");
-projectsFolder.addProjects("Default");
-viewProject.renderProjects(projectsFolder.projects);
+// projectsFolder.addProjects("Default");
+// viewProject.renderProjects(projectsFolder.projects);
+
+function retrieveDataFromLocalStorage() {
+  if (localStorage.length !== 0) {
+    console.log(localStorage.getItem("projects"));
+    console.log(JSON.parse(localStorage.getItem("projects")));
+    return JSON.parse(localStorage.getItem("projects"));
+  }
+}
+
+retrieveDataFromLocalStorage();
 
 function createProject(e) {
   const projectFormData = new FormData(e.target);
@@ -133,23 +143,23 @@ function projectTabSwitching() {
   });
 }
 
-function deleteProject() {
-  const projectTrashCan = document.querySelectorAll(".svg-icons-projects");
-  projectTrashCan.forEach((projectsTrashCans) => {
-    projectsTrashCans.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const removeProjectBtn = e.target;
-      const removeProjectContainer = removeProjectBtn.parentNode;
-      const projectContainerId =
-        removeProjectContainer.getAttribute("projects-id");
-      const findProjectId = projectsFolder.projects.findIndex(
-        (project) => project.id === projectContainerId
-      );
-      projectsFolder.projects.splice(findProjectId, 1);
-      const removeProject = removeProjectContainer.remove();
-    });
-  });
-}
+// function deleteProject() {
+//   const projectTrashCan = document.querySelectorAll(".svg-icons-projects");
+//   projectTrashCan.forEach((projectsTrashCans) => {
+//     projectsTrashCans.addEventListener("click", (e) => {
+//       e.stopPropagation();
+//       const removeProjectBtn = e.target;
+//       const removeProjectContainer = removeProjectBtn.parentNode;
+//       const projectContainerId =
+//         removeProjectContainer.getAttribute("projects-id");
+//       const findProjectId = projectsFolder.projects.findIndex(
+//         (project) => project.id === projectContainerId
+//       );
+//       projectsFolder.projects.splice(findProjectId, 1);
+//       const removeProject = removeProjectContainer.remove();
+//     });
+//   });
+// }
 
 function deleteProjectWithTodos() {
   const projectTrashCanIcons = document.querySelectorAll(".svg-icons-projects");
@@ -201,7 +211,7 @@ const priorityTodo = document.querySelector(".todo-content-priority");
 const dueDate = document.querySelector(".todo-content-date");
 const calendarIcon = document.querySelector(".svg-icons");
 const submitBtnTodo = document.querySelector(".submit-btn-todo");
-const userTodoForm = document.querySelector(".todo-form");
+const userTodoForm = document.getElementById("todo-form");
 
 // toggle between adding new todo and submitting it
 todoParagraph.addEventListener("click", () => {

@@ -37,6 +37,7 @@ class ProjectsFolder {
   addProjects(projectName, id = randomUUID()) {
     const newProject = new CreateProject(projectName, id);
     this.projects.push(newProject);
+    localStorage.setItem("projects", JSON.stringify(this.projects));
   }
 
   findProjectById(projectId) {
