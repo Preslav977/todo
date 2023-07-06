@@ -10,7 +10,7 @@ const viewTodos = {
     todosArray.forEach((todo) => {
       // create the container that will append the other DOM element
       const todoDiv = document.createElement("div");
-      todoDiv.setAttribute("todos-id", todo.id);
+      todoDiv.setAttribute("todos-id", todo._id);
       todoDiv.classList.add("todos-content");
       // create radio button to set the todo's as complete
       const checkCompleteTodo = document.createElement("input");
@@ -18,7 +18,7 @@ const viewTodos = {
       checkCompleteTodo.setAttribute("value", "true");
       checkCompleteTodo.classList.add("complete-todo-checkbox");
       checkCompleteTodo.setAttribute("id", "completed-todo-checkbox");
-      checkCompleteTodo.textContent = `${todo.complete}`;
+      checkCompleteTodo.textContent = `${todo._complete}`;
       if (checkCompleteTodo.textContent === "true") {
         checkCompleteTodo.setAttribute("checked", "");
       } else {
@@ -26,10 +26,10 @@ const viewTodos = {
       }
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
-      titleTodo.textContent = `${todo.title}`;
+      titleTodo.textContent = `${todo._title}`;
       titleTodo.classList.add("todo-content", "todo-text-content");
       const descriptionTodo = document.createElement("p");
-      descriptionTodo.textContent = `${todo.description}`;
+      descriptionTodo.textContent = `${todo._description}`;
       descriptionTodo.classList.add("todo-description");
       const priorityTodo = document.createElement("select");
       priorityTodo.classList.add("todo-content-priority-menu");
@@ -45,7 +45,7 @@ const viewTodos = {
       optionMediumPriority.text = "medium";
       const optionHighPriority = document.createElement("option");
       optionHighPriority.text = "high";
-      priorityTodo.textContent = `${todo.priority}`;
+      priorityTodo.textContent = `${todo._priority}`;
       if (priorityTodo.textContent === "low") {
         optionLowPriority.setAttribute("selected", "default");
       } else if (priorityTodo.textContent === "medium") {
@@ -58,7 +58,7 @@ const viewTodos = {
       // create paragraph to dueDate for todo
       const dateTodo = document.createElement("p");
       dateTodo.classList.add("todo-date-content");
-      dateTodo.textContent = `${todo.dueDate}`;
+      dateTodo.textContent = `${todo._dueDate}`;
       if (`${todo.dueDate}` === "") {
         dateTodo.textContent = format(new Date(), "dd-MM-yyyy");
       }
@@ -79,7 +79,7 @@ const viewTodos = {
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
       trashcanIcon.classList.add("svg-icons-todos", "todo-trashcan-svg-icon");
-      trashcanIcon.setAttribute("id", "trashcan-icon");
+      trashcanIcon.setAttribute("id", "trashcan-icon-todos");
       // append radio button
       todoDiv.appendChild(checkCompleteTodo);
       // append paragraph with title

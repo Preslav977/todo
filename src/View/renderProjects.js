@@ -9,10 +9,11 @@ const viewProject = {
       projectDiv.setAttribute("projects-id", project.id);
       projectDiv.textContent = `${project.title}`;
       projectDiv.classList.add("projects-content");
+      projectDiv.setAttribute("id", "projects-containers");
       const trashcanIcon = new Image();
       trashcanIcon.src = trashcanSvg;
       trashcanIcon.classList.add("svg-icons-projects");
-      trashcanIcon.setAttribute("id", "trashcan-icon");
+      trashcanIcon.setAttribute("id", "trashcan-icon-projects");
       projectDiv.appendChild(trashcanIcon);
       projectsContainer.appendChild(projectDiv);
     });

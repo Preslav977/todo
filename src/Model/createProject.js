@@ -47,6 +47,7 @@ class CreateProject {
       id
     );
     this.todos.push(newToDo);
+    localStorage.setItem("todos", JSON.stringify(this.todos));
   }
 
   findTodoById(todoId) {

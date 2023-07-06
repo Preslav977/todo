@@ -49,25 +49,12 @@ projectSubmitBtn.addEventListener("click", (e) => {
 });
 
 const projectsFolder = new ProjectsFolder("Folder");
-// projectsFolder.addProjects("Default");
-// viewProject.renderProjects(projectsFolder.projects);
-
-function retrieveDataFromLocalStorage() {
-  if (localStorage.length !== 0) {
-    console.log(localStorage.getItem("projects"));
-    console.log(JSON.parse(localStorage.getItem("projects")));
-    return JSON.parse(localStorage.getItem("projects"));
-  }
-}
-
-retrieveDataFromLocalStorage();
 
 function createProject(e) {
   const projectFormData = new FormData(e.target);
   const projectObject = Object.fromEntries(projectFormData);
   const getProjectTitle = projectObject["project-title"];
   projectsFolder.addProjects(`${getProjectTitle}`);
-  console.log(projectsFolder.projects);
 }
 
 function removeDuplicatedProject() {
@@ -78,19 +65,20 @@ function removeDuplicatedProject() {
 
 let foundProject;
 
-function findAndSelectProject() {
-  const selectAllProjects = document.querySelectorAll(".projects-content");
-  selectAllProjects.forEach((project) => {
-    project.addEventListener("click", (e) => {
-      const clickOnProject = e.target;
-      const getClickedProjectId = clickOnProject.getAttribute("projects-id");
-      foundProject = projectsFolder.findProjectById(getClickedProjectId);
-      if (foundProject) {
-        return foundProject;
-      }
-    });
-  });
+function findAndSelectProject(e) {
+  const clickOnProject = e.target;
+  const getClickedProjectId = clickOnProject.getAttribute("projects-id");
+  foundProject = projectsFolder.findProjectById(getClickedProjectId);
+  if (foundProject) {
+    return foundProject;
+  }
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target.className === "projects-content") {
+    findAndSelectProject(e);
+  }
+});
 
 function addTodoToSelectedProject(e) {
   const todoForm = new FormData(e.target);
@@ -105,61 +93,43 @@ function addTodoToSelectedProject(e) {
   } else {
     getTodoDate = format(parseISO(getTodoDate), "dd-MM-yyyy");
   }
-  foundProject.addTodo(
-    `${getTodoTitle}`,
-    `${getTodoDescription}`,
-    `${getTodoDate}`,
-    `${getTodoPriority}`,
-    `${getCompleteTodo}`
-  );
-  console.log(foundProject.todos);
-  const findAndDeleteDuplicatedTodos =
-    document.querySelectorAll(".todos-content");
-  findAndDeleteDuplicatedTodos.forEach((todo) => {
-    todo.remove();
-  });
-  viewTodos.renderTodos(foundProject.todos);
+  if (foundProject) {
+    foundProject.addTodo(
+      `${getTodoTitle}`,
+      `${getTodoDescription}`,
+      `${getTodoDate}`,
+      `${getTodoPriority}`,
+      `${getCompleteTodo}`
+    );
+    const findAndDeleteDuplicatedTodos =
+      document.querySelectorAll(".todos-content");
+    findAndDeleteDuplicatedTodos.forEach((todo) => {
+      todo.remove();
+    });
+    viewTodos.renderTodos(foundProject.todos);
+  }
 }
 
 let tabSwitchProjectId;
 
-function projectTabSwitching() {
-  const selectAllExistingProjects =
-    document.querySelectorAll(".projects-content");
-  selectAllExistingProjects.forEach((project) => {
-    project.addEventListener("click", (e) => {
-      const clickedProject = e.target;
-      const getClickedProjectId = clickedProject.getAttribute("projects-id");
-      tabSwitchProjectId = projectsFolder.findProjectById(getClickedProjectId);
-      if (tabSwitchProjectId) {
-        const tabSwitchProjectsTodos =
-          document.querySelectorAll(".todos-content");
-        tabSwitchProjectsTodos.forEach((todo) => {
-          todo.remove();
-        });
-      }
-      viewTodos.renderTodos(tabSwitchProjectId.todos);
+function projectTabSwitching(e) {
+  const clickedProject = e.target;
+  const getClickedProjectId = clickedProject.getAttribute("projects-id");
+  tabSwitchProjectId = projectsFolder.findProjectById(getClickedProjectId);
+  if (tabSwitchProjectId) {
+    const tabSwitchProjectsTodos = document.querySelectorAll(".todos-content");
+    tabSwitchProjectsTodos.forEach((todo) => {
+      todo.remove();
     });
-  });
+  }
+  viewTodos.renderTodos(tabSwitchProjectId.todos);
 }
 
-// function deleteProject() {
-//   const projectTrashCan = document.querySelectorAll(".svg-icons-projects");
-//   projectTrashCan.forEach((projectsTrashCans) => {
-//     projectsTrashCans.addEventListener("click", (e) => {
-//       e.stopPropagation();
-//       const removeProjectBtn = e.target;
-//       const removeProjectContainer = removeProjectBtn.parentNode;
-//       const projectContainerId =
-//         removeProjectContainer.getAttribute("projects-id");
-//       const findProjectId = projectsFolder.projects.findIndex(
-//         (project) => project.id === projectContainerId
-//       );
-//       projectsFolder.projects.splice(findProjectId, 1);
-//       const removeProject = removeProjectContainer.remove();
-//     });
-//   });
-// }
+document.addEventListener("click", (e) => {
+  if (e.target.id === "projects-containers") {
+    projectTabSwitching(e);
+  }
+});
 
 function deleteProjectWithTodos() {
   const projectTrashCanIcons = document.querySelectorAll(".svg-icons-projects");
@@ -174,31 +144,54 @@ function deleteProjectWithTodos() {
         (project) => project.id === projectContainerId
       );
       projectsFolder.projects.splice(findProjectUsingId, 1);
+      if (localStorage.getItem("projects")) {
+        localStorage.removeItem("projects");
+      }
       const removeProject = removeProjectContainer.remove();
-      foundProject.todos.forEach((removedTodos) => {
-        foundProject.todos.splice(removedTodos, 10);
-        const removeAllTodos = document.querySelectorAll(".todos-content");
-        removeAllTodos.forEach((todo) => {
-          todo.remove();
+      if (foundProject && localStorage.getItem("todos")) {
+        foundProject.todos.forEach((removedTodos) => {
+          foundProject.todos.splice(removedTodos, 10);
+          localStorage.removeItem("todos");
+          const removeAllTodos = document.querySelectorAll(".todos-content");
+          removeAllTodos.forEach((todo) => {
+            todo.remove();
+          });
         });
-      });
+      } else {
+        // do nothing
+      }
     });
   });
 }
-
-findAndSelectProject();
 
 userProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
   removeDuplicatedProject();
   createProject(e);
   viewProject.renderProjects(projectsFolder.projects);
-  findAndSelectProject();
-  // deleteProject();
-  projectTabSwitching();
   deleteProjectWithTodos();
   userProjectForm.reset();
 });
+
+function loadLocalStorageProjects() {
+  if (localStorage.getItem("projects")) {
+    const retrieveLocalStorageProjects = JSON.parse(
+      localStorage.getItem("projects")
+    );
+    retrieveLocalStorageProjects.forEach((retrievedProjects) => {
+      projectsFolder.addProjects(`${retrievedProjects._title}`);
+      const deleteDuplicatedProjects = document
+        .querySelectorAll(".projects-content")
+        .forEach((project) => project.remove());
+      viewProject.renderProjects(projectsFolder.projects);
+    });
+  } else {
+    // do nothing
+  }
+}
+
+loadLocalStorageProjects();
+deleteProjectWithTodos();
 
 // render between the adding new todo and submitting the project
 renderTodosButton();
@@ -314,18 +307,26 @@ document.addEventListener("click", (e) => {
 });
 
 function deleteTodo() {
-  const todoTrashCan = document.querySelectorAll(".svg-icons-todos");
+  const todoTrashCan = document.querySelectorAll("#trashcan-icon-todos");
+  console.log(todoTrashCan);
   todoTrashCan.forEach((todosTrashCans) => {
     todosTrashCans.addEventListener("click", (e) => {
       e.stopPropagation();
       const removeTodoBtn = e.target;
+      console.log(removeTodoBtn);
       const removeTodoContainer = removeTodoBtn.parentNode;
+      console.log(removeTodoContainer);
       const todoContainerId = removeTodoContainer.getAttribute("todos-id");
+      console.log(todoContainerId);
       const findTodoId = foundProject.todos.findIndex(
         (todo) => todo.id === todoContainerId
       );
       console.log(findTodoId);
       foundProject.todos.splice(findTodoId, 1);
+      console.log(foundProject.todos.splice(findTodoId, 1));
+      if (localStorage.getItem("todos")) {
+        localStorage.removeItem("todos");
+      }
       const removeTodo = removeTodoContainer.remove();
     });
   });
@@ -353,7 +354,6 @@ function changeTodoCompleteProperty() {
     findTodoId.changeCompleteProperty();
     completeOrNotTodoCheckbox.removeAttribute("checked");
   }
-  console.log(findTodoId);
 }
 
 let priorityOption;
@@ -378,7 +378,6 @@ function changeTodoPriorityProperty() {
   } else {
     findTodoId.changePriorityProperty([3]);
   }
-  console.log(findTodoId);
 }
 
 let dueDateTodo;
@@ -387,8 +386,6 @@ let getDueDate;
 function findDateTodos(e) {
   dueDateTodo = e.target;
   getDueDate = format(parseISO(dueDateTodo.value), "dd-MM-yyyy");
-  console.log(getDueDate);
-  // getDueDate = dueDateTodo.value;
   const dueDateContainer = dueDateTodo.parentNode;
   const dueDateContainerId = dueDateContainer.getAttribute("todos-id");
   findTodoId = foundProject.findTodoById(dueDateContainerId);
@@ -400,7 +397,6 @@ function findDateTodos(e) {
 function changeTodoDueDateProperty() {
   if (deleteTodo.value !== "") {
     findTodoId.changeDateProperty(getDueDate);
-    console.log(findTodoId);
   }
 }
 
@@ -431,3 +427,34 @@ document.addEventListener("change", (e) => {
     changeTodoDueDateProperty(getDueDate);
   }
 });
+
+function loadLocalStorageTodos() {
+  if (localStorage.getItem("todos")) {
+    const retrieveLocalStorageTodos = JSON.parse(localStorage.getItem("todos"));
+    if (foundProject) {
+      retrieveLocalStorageTodos.forEach((retrievedTodos) => {
+        if (retrievedTodos._date === "") {
+          retrievedTodos._date = format(new Date(), "dd-MM-yyyy");
+        } else {
+          retrievedTodos._date = format(
+            parseISO(retrievedTodos._date),
+            "dd-MM-yyyy"
+          );
+        }
+        foundProject.addTodo(
+          `${retrievedTodos._title}`,
+          `${retrievedTodos._description}`,
+          `${retrievedTodos._date}`,
+          `${retrievedTodos._priority}`,
+          `${retrievedTodos._complete}`
+        );
+        const deleteDuplicatedProjects = document
+          .querySelectorAll(".todos-content")
+          .forEach((project) => project.remove());
+        viewTodos.renderTodos(foundProject.todos);
+      });
+    }
+  }
+}
+
+loadLocalStorageTodos();
