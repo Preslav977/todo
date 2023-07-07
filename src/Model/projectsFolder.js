@@ -20,9 +20,9 @@ class ProjectsFolder {
   }
 
   set title(value) {
-    if (value.length < 5) {
-      console.log("Project name is too short, 5 characters at least");
-    }
+    // if (value.length < 5) {
+    //   console.log("Project name is too short, 5 characters at least");
+    // }
     this._title = value;
   }
 

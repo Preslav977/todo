@@ -35,12 +35,12 @@ class CreateTodo {
 
   // write on this property
   set title(value) {
-    if (value.length < 5) {
-      console.log(
-        "The title of this todo, is too short, 5 characters at least"
-      );
-      return;
-    }
+    // if (value.length < 5) {
+    //   console.log(
+    //     "The title of this todo, is too short, 5 characters at least"
+    //   );
+    //   return;
+    // }
     this._title = value;
   }
 
@@ -49,12 +49,12 @@ class CreateTodo {
   }
 
   set description(value) {
-    if (value.length < 10) {
-      console.log(
-        "The description of this todo is too short, 10 characters at least"
-      );
-      return;
-    }
+    // if (value.length < 10) {
+    //   console.log(
+    //     "The description of this todo is too short, 10 characters at least"
+    //   );
+    //   return;
+    // }
     this._description = value;
   }
 
