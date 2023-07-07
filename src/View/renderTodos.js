@@ -21,8 +21,10 @@ const viewTodos = {
       checkCompleteTodo.textContent = `${todo._complete}`;
       if (checkCompleteTodo.textContent === "true") {
         checkCompleteTodo.setAttribute("checked", "");
+        checkCompleteTodo.textContent = "";
       } else {
         checkCompleteTodo.removeAttribute("checked");
+        checkCompleteTodo.style.fontSize = "0";
       }
       // create paragraph to set a title for the todo
       const titleTodo = document.createElement("p");
